@@ -242,6 +242,7 @@ namespace MagicSealedSimulator
             
         }
 
+        // JK
         public static MagicCard getFoil(MagicCard foilcard)
         {
             // 15/63 gives foil
@@ -290,6 +291,7 @@ namespace MagicSealedSimulator
             return foilcard;
         }
 
+        // JK
         public static bool checkFoil()
         {
             bool isItFoil = false;
@@ -302,6 +304,7 @@ namespace MagicSealedSimulator
             return isItFoil;
         }
 
+        // JK
         public static bool checkMythic()
         {
             bool isItMythic = false;
@@ -452,7 +455,7 @@ namespace MagicSealedSimulator
             return s;
         }
 
-        // Randomize indexes for any number of cards
+        // Randomize indexes for any number of cards    JK
         public static List<int> randomizeRarities(int randomSize, int raritySize)
         {
             HashSet<int> check = new HashSet<int>();
@@ -473,7 +476,7 @@ namespace MagicSealedSimulator
             return randomRarityIndexList;
         }
 
-        // Randomize index for one card (use: foil cards)
+        // Randomize index for one card (use: foil cards)   JK
         public static int randomizeRarity(int randomSize)
         {
             int randomRarityIndex = new int();
