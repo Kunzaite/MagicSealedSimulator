@@ -1995,7 +1995,7 @@ Card #:		168/249
 Card Name:	Nylea's Presence
 Card Color:	G
 Mana Cost:	1G
-Type & Class:	
+Type & Class:	Enchantment
 Pow/Tou:	
 Card Text:	Enchant land
 		When Nylea's Presence enters the battlefield, draw a card.
