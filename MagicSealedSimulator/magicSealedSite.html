@@ -219,10 +219,11 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript">
-
+        var cardColorCardinality = {}
         $(document).ready(function () {
             $.getJSON("http://flamingfox.se/magiccarddb/index.php", { boosters: 6, data: true}, function (result) {
                 console.log(result.data);
+
                 $.each(result.boosters, function (index, booster){
                     $.each(booster, function (index, card) {
                         var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace("-", "").replace("(", "").replace(")", "").toLowerCase();
@@ -235,12 +236,26 @@
                         else {
                             cardcolor = card.color;
                         }
-
+                        if (!cardColorCardinality[cardcolor]) {
+                            cardColorCardinality[cardcolor] = 1
+                        } else {
+                            cardColorCardinality[cardcolor] += 1;
+                        }
                         $("#poolPile"+cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
                     });
 
                     $.enableDrag();
                 });
+
+                $("#poolImage").attr("title", "W: " + countArray[0] + ", U: " + countArray[1] + ", B: " + countArray[2] + ", R: " + countArray[3] + ", G: " + countArray[4] + ", M: " + countArray[5] + ", A/L: " + countArray[6]);
+                $("#WButton").attr("title", "White: " + cardColorCardinality["W"] + " cards.");
+                $("#UButton").attr("title", "Blue: " + cardColorCardinality["U"] + " cards.");
+                $("#BButton").attr("title", "Black: " + cardColorCardinality["B"] + " cards.");
+                $("#RButton").attr("title", "Red: " + cardColorCardinality["R"] + " cards.");
+                $("#GButton").attr("title", "Green: " + cardColorCardinality["G"] + " cards.");
+                $("#MButton").attr("title", "Multicolor: " + cardColorCardinality["Gld"] + " cards.");
+                $("#AButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
+                $("#LButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
             });
 
             $("#previewImage").draggable({
@@ -278,15 +293,7 @@
                 $(this).css('height', size + 'px');
             });
 
-            $("#poolImage").attr("title", "W: " + countArray[0] + ", U: " + countArray[1] + ", B: " + countArray[2] + ", R: " + countArray[3] + ", G: " + countArray[4] + ", M: " + countArray[5] + ", A/L: " + countArray[6]);
-            $("#WButton").attr("title", "White: " + countArray[0] + " cards.");
-            $("#UButton").attr("title", "Blue: " + countArray[1] + " cards.");
-            $("#BButton").attr("title", "Black: " + countArray[2] + " cards.");
-            $("#RButton").attr("title", "Red: " + countArray[3] + " cards.");
-            $("#GButton").attr("title", "Green: " + countArray[4] + " cards.");
-            $("#MButton").attr("title", "Multicolor: " + countArray[5] + " cards.");
-            $("#AButton").attr("title", "Colorless: " + countArray[6] + " cards.");
-            $("#LButton").attr("title", "Colorless: " + countArray[6] + " cards.");
+
 
             $('.toggleButtonImages').attr("toggled", "0");
             $('.sortPoolButtonImages').attr("clicked", "0");
@@ -362,27 +369,27 @@
 
                 // Add plains
                 for (var i = 0; i < $('#addPlainsBox').val() ; i++) {
-                    $("#deckPile7").append($('<li></li>').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add island
                 for (var i = 0; i < $('#addIslandBox').val() ; i++) {
-                    $("#deckPile7").append($('<li></li>').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add swamp
                 for (var i = 0; i < $('#addSwampBox').val() ; i++) {
-                    $("#deckPile7").append($('<li></li>').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add mountain
                 for (var i = 0; i < $('#addMountainBox').val() ; i++) {
-                    $("#deckPile7").append($('<li></li>').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add forest
                 for (var i = 0; i < $('#addForestBox').val() ; i++) {
-                    $("#deckPile7").append($('<li></li>').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
 
@@ -548,33 +555,9 @@
                 $("#deckColorButton").attr("src", "/Images/SelectedColorButton.jpg");
 
                 $(elems).each(function () {
-                    if ($(this).attr("color") == "W") {
-                        $(this).appendTo($("#deckPile1"));
-                    }
 
-                    else if ($(this).attr("color") == "U") {
-                        $(this).appendTo($("#deckPile2"));
-                    }
+                    $(this).appendTo($("#deckPile" + $(this).attr("color")));
 
-                    else if ($(this).attr("color") == "B") {
-                        $(this).appendTo($("#deckPile3"));
-                    }
-
-                    else if ($(this).attr("color") == "R") {
-                        $(this).appendTo($('#deckPile4'));
-                    }
-
-                    else if ($(this).attr("color") == "G") {
-                        $(this).appendTo($('#deckPile5'));
-                    }
-
-                    else if ($(this).attr("color") == "Gld") {
-                        $(this).appendTo($('#deckPile6'));
-                    }
-
-                    else {
-                        $(this).appendTo($('#deckPile7'));
-                    }
                 });
                 $.enableDrag();
             });
@@ -595,34 +578,9 @@
                     return parseInt($(a).attr("cmc")) < parseInt($(b).attr("cmc")) ? 1 : -1;
                 });
 
+                var deckList = ["deckPileW", "deckPileU", "deckPileB", "deckPileR", "deckPileG", "deckPileGld", "deckPileAL"];
                 $(elems).each(function () {
-                    if ($(this).attr("cmc") == "1") {
-                        $(this).appendTo('#deckPile1');
-                    }
-
-                    else if ($(this).attr("cmc") == "2") {
-                        $(this).appendTo('#deckPile2');
-                    }
-
-                    else if ($(this).attr("cmc") == "3") {
-                        $(this).appendTo('#deckPile3');
-                    }
-
-                    else if ($(this).attr("cmc") == "4") {
-                        $(this).appendTo('#deckPile4');
-                    }
-
-                    else if ($(this).attr("cmc") == "5") {
-                        $(this).appendTo('#deckPile5');
-                    }
-
-                    else if ($(this).attr("cmc") == "6") {
-                        $(this).appendTo('#deckPile6');
-                    }
-
-                    else {
-                        $(this).appendTo('#deckPile7');
-                    }
+                    $(this).appendTo('#' + deckList[$(this).attr("cmc")]);
                 });
                 $.enableDrag();
             });
@@ -641,24 +599,24 @@
 
                 $(elems).each(function () {
                     if ($(this).attr("rarity") == "R" || $(this).attr("rarity") == "M") {
-                        $(this).appendTo('#deckPile1');
+                        $(this).appendTo('#deckPileW');
                     }
 
                     else if ($(this).attr("rarity") == "U") {
-                        $(this).appendTo('#deckPile2');
+                        $(this).appendTo('#deckPileU');
                     }
 
                     else {
                         if ($("#pile3Deckdiv li").length < 20) {
-                            $(this).appendTo('#deckPile3');
+                            $(this).appendTo('#deckPileB');
                         }
 
                         else if ($("#pile4Deckdiv li").length < 20) {
-                            $(this).appendTo('#deckPile4');
+                            $(this).appendTo('#deckPileR');
                         }
 
                         else {
-                            $(this).appendTo('#deckPile5');
+                            $(this).appendTo('#deckPileG');
                         }
                     }
                 });
@@ -679,31 +637,31 @@
 
                 $(elems).each(function () {
                     if ($(this).attr("type") == "Creature") {
-                        $(this).appendTo('#deckPile1');
+                        $(this).appendTo('#deckPileW');
                     }
 
                     else if ($(this).attr("type") == "Enchantment") {
-                        $(this).appendTo('#deckPile2');
+                        $(this).appendTo('#deckPileU');
                     }
 
                     else if ($(this).attr("type") == "Artifact") {
-                        $(this).appendTo('#deckPile3');
+                        $(this).appendTo('#deckPileB');
                     }
 
                     else if ($(this).attr("type") == "Instant") {
-                        $(this).appendTo('#deckPile4');
+                        $(this).appendTo('#deckPileR');
                     }
 
                     else if ($(this).attr("type") == "Sorcery") {
-                        $(this).appendTo('#deckPile5');
+                        $(this).appendTo('#deckPileG');
                     }
 
                     else if ($(this).attr("type") == "Land") {
-                        $(this).appendTo('#deckPile6');
+                        $(this).appendTo('#deckPileGld');
                     }
 
                     else {
-                        $(this).appendTo('#deckPile7');
+                        $(this).appendTo('#deckPileAL');
                     }
 
                 });
@@ -947,7 +905,7 @@
 
             // Send a card from Pool to Deck (first column)
             $('.poolStack').on('dblclick', 'li', function () {
-                $(this).appendTo($('#deckPile1'));
+                $(this).appendTo($('#deckPileW'));
                 $('#totalCardsInDeck').html(function (i, val) { return val * 1 + 1 });
                 if ($(this).attr("type") == 'Creature') {
                     $('#totalCreaturesInDeck').html(function (i, val) { return val * 1 + 1 });
@@ -1153,31 +1111,31 @@
     </div>
     <div id="deckDiv">
 	    <div id="pile1Deckdiv">
-		    <ul id="deckPile1" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileW" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile2Deckdiv">
-		    <ul id="deckPile2" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileU" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile3Deckdiv">
-		    <ul id="deckPile3" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileB" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile4Deckdiv"">
-		    <ul id="deckPile4" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileR" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile5Deckdiv">
-		    <ul id="deckPile5" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileG" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile6Deckdiv">
-		    <ul id="deckPile6" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileGld" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile7Deckdiv">
-		    <ul id="deckPile7" class="deckStack" style="height:500px; list-style-type:none">
+		    <ul id="deckPileAL" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
 
