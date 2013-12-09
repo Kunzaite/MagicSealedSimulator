@@ -197,6 +197,7 @@
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
     <Content Include="JavaScript1.js" />
+    <Content Include="magicSealedSite.html" />
     <Content Include="packages.config" />
     <Content Include="zclip.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />

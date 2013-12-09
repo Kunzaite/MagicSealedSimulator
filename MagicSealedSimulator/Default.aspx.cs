@@ -115,7 +115,7 @@ namespace MagicSealedSimulator
         public void createAndAddFoilToStack(string name, string color, string type, string cmc, string rarity)
         {
             // create image
-            string n = name.Replace(" ", "").Replace("'", "").Replace(",", "").Replace("-", "").Replace("(", "").Replace(")", ""); ;
+            string n = name.Replace(" ", "").Replace("'", "").Replace(",", "").Replace("-", "").Replace("(", "").Replace(")", "");
 
             Image myImg = new Image();
             myImg.ImageUrl = "~/TherosPictures/" + n + ".jpg";
