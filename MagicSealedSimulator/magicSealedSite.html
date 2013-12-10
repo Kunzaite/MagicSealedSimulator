@@ -241,13 +241,21 @@
                         } else {
                             cardColorCardinality[cardcolor] += 1;
                         }
-                        $("#poolPile"+cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
+
+                            if (card.foiled == true) {
+                                $("#poolPile" + cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150, }).css('border', '2px solid silver')).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
+                            }
+
+                            else if (cardtype[0] != "Basic") {
+                                $("#poolPile" + cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
+                            }   
+                        
                     });
 
                     $.enableDrag();
                 });
 
-                $("#poolImage").attr("title", "W: " + countArray[0] + ", U: " + countArray[1] + ", B: " + countArray[2] + ", R: " + countArray[3] + ", G: " + countArray[4] + ", M: " + countArray[5] + ", A/L: " + countArray[6]);
+                $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["Gld"] + "\nA/L: " + cardColorCardinality["AL"]);
                 $("#WButton").attr("title", "White: " + cardColorCardinality["W"] + " cards.");
                 $("#UButton").attr("title", "Blue: " + cardColorCardinality["U"] + " cards.");
                 $("#BButton").attr("title", "Black: " + cardColorCardinality["B"] + " cards.");
@@ -278,21 +286,13 @@
 
             var countArray = [];
             var verticalSpaceBetweenListItems = 3;
-            countArray.push($("#pile1div li").length);
-            countArray.push($("#pile2div li").length);
-            countArray.push($("#pile3div li").length);
-            countArray.push($("#pile4div li").length);
-            countArray.push($("#pile5div li").length);
-            countArray.push($("#pile6div li").length);
-            countArray.push($("#pile7div li").length);
-            var largest = Math.max.apply(Math, countArray);
+
+            var largest = Math.max.apply(Math, cardColorCardinality);
             var size = 30 * largest || 30 * 15;
-            console.log(size);
             var elems = $("#poolDiv").find('ul');
             $(elems).each(function () {
                 $(this).css('height', size + 'px');
             });
-
 
 
             $('.toggleButtonImages').attr("toggled", "0");
@@ -369,27 +369,27 @@
 
                 // Add plains
                 for (var i = 0; i < $('#addPlainsBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add island
                 for (var i = 0; i < $('#addIslandBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add swamp
                 for (var i = 0; i < $('#addSwampBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add mountain
                 for (var i = 0; i < $('#addMountainBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add forest
                 for (var i = 0; i < $('#addForestBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
 
@@ -512,7 +512,14 @@
         $(function () {
             $("#restoreDeckButton").click(function () {
                 $("ul li").each(function () {
-                    $(this).appendTo($('#poolPile' + $(this).attr("color")));
+                    if ($(this).attr("type") == "Basic Land") {
+                        $(this).remove();
+                    }
+
+                    else {
+                        $(this).appendTo($('#poolPile' + $(this).attr("color")));
+                    }
+                    
                 });
             });
         });

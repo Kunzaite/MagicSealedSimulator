@@ -1457,7 +1457,7 @@ Rarity:		U
 Card #:		123/249
 
 Card Name:	Hammer of Purphoros
-Card Color:	Gld
+Card Color:	R
 Mana Cost:	1RR
 Type & Class:	Legendary Enchantment Artifact
 Pow/Tou:	
