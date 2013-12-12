@@ -3,10 +3,6 @@ header('Access-Control-Allow-Origin: *');
 include_once 'mysql_functions.php';
 include_once 'util.php';
 
-$IMAGE_DIR = 'cardimages';
-$DIVIDER = '/';
-$IMAGE_END = '.full.jpg';
-
 class Card { 
 	// false means that the data is filled in by hand
 	// filter string means that the data will come from db but be parsed before set.
@@ -96,6 +92,10 @@ function bracketFilter($string){
 }
 
 function mapToOldApiSyntax($rawCards){
+	$IMAGE_DIR = 'http://flamingfox.se/magiccarddb/cardimages';
+	$DIVIDER = '/';
+	$IMAGE_END = '.full.jpg';
+
 	$cards = array();
 	foreach($rawCards as $rawCard){
 		$cardBluePrint = new Card();
@@ -110,6 +110,7 @@ function mapToOldApiSyntax($rawCards){
 				$card->$k = $rawCard[$k];
 			}
 		}
+
 		$card->image = $IMAGE_DIR . $DIVIDER . $card->set . $DIVIDER . $card->name . $IMAGE_END;
 		$cards[] = $card;
 	}
