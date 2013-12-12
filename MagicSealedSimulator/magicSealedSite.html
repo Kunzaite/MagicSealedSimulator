@@ -12,10 +12,8 @@
 		background-color:#E2EBED;
 	}
     
-
-        /* menu header */
     .css-title:before {
-        content: "some title";
+        content: "Sort by";
         display: block;
         position: absolute;
         top: 0;
@@ -28,29 +26,10 @@
         font-size: 11px;
         font-weight: bold;
     }
+
     .css-title :first-child {
-        margin-top: 20px;
-    }
-
-
-    /* menu header via data attribute */
-    .data-title:before {
-        content: attr(data-menutitle);
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        background: #DDD;
-        padding: 2px;
-    
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 11px;
-        font-weight: bold;
-    }
-    .data-title :first-child {
-        margin-top: 20px;
-    }
+    margin-top: 20px;
+}
 
 
     /* demo trigger boxes */
@@ -147,6 +126,10 @@
 
 	}
 
+    .foil {
+        border: 3px solid red;
+    }
+
 	#dhtmlgoodies_mainContainer div{	/* Parent <div> of small boxes */
         /**float:left;*/
 		margin-right:10px;
@@ -216,19 +199,57 @@
     }
 
 	</style>
-
+    <link rel="stylesheet" href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" />
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js"></script>
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script type="text/javascript">
         var cardColorCardinality = {}
         $(document).ready(function () {
-            $.getJSON("http://flamingfox.se/magiccarddb/index.php", { boosters: 6, data: true}, function (result) {
+
+            function getQueryString() {
+                var ret = {};
+                var dec_url = decodeURI(document.location);
+                var parts = (dec_url.toString().split('?')[1]).split('&');
+                for (var i = 0; i < parts.length; i++) {
+
+                    var p = parts[i].split('=');
+                    // so strings will be correctly parsed:
+                    p[1] = decodeURIComponent(p[1].replace(/\+/g, " "));
+
+                    if (p[0].search(/\[\]/) >= 0) { // then it's an array
+                        p[0] = p[0].replace('[]', '');
+
+                        if (typeof ret[p[0]] != 'object') ret[p[0]] = [];
+                        ret[p[0]].push(p[1]);
+                    } else {
+                        ret[p[0]] = p[1];
+                    }
+                }
+                return ret;
+            }
+            console.log(getQueryString());
+
+            $.getJSON("http://flamingfox.se/magiccarddb/boosters.php", { sets: getQueryString().sets, verbose: true }, function (result) {
                 console.log(result.data);
 
                 $.each(result.boosters, function (index, booster){
                     $.each(booster, function (index, card) {
                         var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace("-", "").replace("(", "").replace(")", "").toLowerCase();
                         var cardcolor = "";
-                        var cardtype = card.typeAndClass.split(" ");
+                        var cardtype = "";
+                        if (card.type.indexOf("Creature") != -1) {
+                            cardtype = "Creature";
+                        }
+
+                        else if (card.type.indexOf("Basic") != -1) {
+                            cardtype = "BasicLand";
+                        }
+
+                        else {
+                            cardtype = card.type;
+                        }
+                         
                         if (card.color == "A" || card.color == "Lnd") {
                             cardcolor = "AL";
                         }
@@ -236,26 +257,28 @@
                         else {
                             cardcolor = card.color;
                         }
+
                         if (!cardColorCardinality[cardcolor]) {
                             cardColorCardinality[cardcolor] = 1
                         } else {
                             cardColorCardinality[cardcolor] += 1;
                         }
 
-                            if (card.foiled == true) {
-                                $("#poolPile" + cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150, }).css('border', '2px solid silver')).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
-                            }
+                        if (card.foiled == true) {
+                            $("#poolPile" + cardcolor).append($('<li></li>').addClass("card")
+                                .append($('<img src="' + encodeURI(card.image) + '"/>').css({ width: 150, }).addClass("foil")).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity));
+                        }
 
-                            else if (cardtype[0] != "Basic") {
-                                $("#poolPile" + cardcolor).append($('<li></li>').append($("<img src='/TherosPictures/" + cardname + ".jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype[0]).attr("cmc", getConvertedManaCost(card.manaCost)).attr("color", cardcolor).attr("rarity", card.rarity));
-                            }   
+                        else if (cardtype != "BasicLand") {
+                            $("#poolPile" + cardcolor).append($('<li></li>').addClass("card").append($('<img src="' + encodeURI(card.image) + '"/>').css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/" + cardname + ".jpg").attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity));
+                        }   
                         
                     });
 
                     $.enableDrag();
                 });
 
-                $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["Gld"] + "\nA/L: " + cardColorCardinality["AL"]);
+                $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["Gld"] + "A/L: " + cardColorCardinality["AL"]);
                 $("#WButton").attr("title", "White: " + cardColorCardinality["W"] + " cards.");
                 $("#UButton").attr("title", "Blue: " + cardColorCardinality["U"] + " cards.");
                 $("#BButton").attr("title", "Black: " + cardColorCardinality["B"] + " cards.");
@@ -264,6 +287,38 @@
                 $("#MButton").attr("title", "Multicolor: " + cardColorCardinality["Gld"] + " cards.");
                 $("#AButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
                 $("#LButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
+            });
+
+            $(function () {
+                $.contextMenu({
+                    selector: '#poolDiv',
+                    className: 'css-title',
+                    callback: function (key, options) {
+                        $("#sort" + key + "PoolButton").click();
+                    },
+                    items: {
+                        "Color": { name: "Color" },
+                        "Cost": { name: "Cost" },
+                        "Rarity": { name: "Rarity" },
+                        "Type": { name: "Type" },
+                    }
+                });
+            });
+
+            $(function () {
+                $.contextMenu({
+                    selector: '#deckDiv',
+                    className: 'css-title',
+                    callback: function (key, options) {
+                        $("#sort" + key + "DeckButton").click();
+                    },
+                    items: {
+                        "Color": { name: "Color" },
+                        "Cost": { name: "Cost" },
+                        "Rarity": { name: "Rarity" },
+                        "Type": { name: "Type" },
+                    }
+                });
             });
 
             $("#previewImage").draggable({
@@ -286,9 +341,16 @@
 
             var countArray = [];
             var verticalSpaceBetweenListItems = 3;
-
-            var largest = Math.max.apply(Math, cardColorCardinality);
+            countArray.push($("#pile1div li").length);
+            countArray.push($("#pile2div li").length);
+            countArray.push($("#pile3div li").length);
+            countArray.push($("#pile4div li").length);
+            countArray.push($("#pile5div li").length);
+            countArray.push($("#pile6div li").length);
+            countArray.push($("#pile7div li").length);
+            var largest = Math.max.apply(Math, countArray);
             var size = 30 * largest || 30 * 15;
+            console.log(size);
             var elems = $("#poolDiv").find('ul');
             $(elems).each(function () {
                 $(this).css('height', size + 'px');
@@ -369,27 +431,27 @@
 
                 // Add plains
                 for (var i = 0; i < $('#addPlainsBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').addClass('card').append($("<img src='/TherosPictures/plains2.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/plains2.jpg").attr("name", "Plains (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add island
                 for (var i = 0; i < $('#addIslandBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').addClass('card').append($("<img src='/TherosPictures/island4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/island4.jpg").attr("name", "Island (4)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add swamp
                 for (var i = 0; i < $('#addSwampBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').addClass('card').append($("<img src='/TherosPictures/swamp4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/swamp4.jpg").attr("name", "Swamp (4)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add mountain
                 for (var i = 0; i < $('#addMountainBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').addClass('card').append($("<img src='/TherosPictures/mountain4.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/mountain4.jpg").attr("name", "Mountain (4)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
                 // Add forest
                 for (var i = 0; i < $('#addForestBox').val() ; i++) {
-                    $("#deckPileAL").append($('<li></li>').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "Basic Land").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
+                    $("#deckPileAL").append($('<li></li>').addClass('card').append($("<img src='/TherosPictures/forest3.jpg'/>").css({ width: 150 })).attr("onmouseover", "javascript:return preview(this);").attr("file", "/TherosPictures/forest3.jpg").attr("name", "Forest (3)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "Colorless").attr("rarity", "C"));
                 }
 
 
@@ -512,7 +574,13 @@
         $(function () {
             $("#restoreDeckButton").click(function () {
                 $("ul li").each(function () {
-                    if ($(this).attr("type") == "Basic Land") {
+
+                    $('#totalCardsInDeck').html("0");
+                    $('#totalCreaturesInDeck').html("0");
+                    $('#totalLandsInDeck').html("0");
+                    $('#totalOtherInDeck').html("0");
+
+                    if ($(this).attr("type") == "BasicLand") {
                         $(this).remove();
                     }
 
@@ -681,7 +749,7 @@
         $(function () {
 
             // Sort by Color - POOL
-            $("#sortColorPoolButton").click(function () {
+            $("#sortColorPoolButton").click(function sortColorPool () {
                 var elems = $("#poolDiv").find('ul').children('li').remove();
                 $('.sortPoolButtonImages').attr("clicked", "0");
                 $("#poolColorButton").attr("clicked", "1");
@@ -823,7 +891,7 @@
         $(function () {
             var sourceElement;
             $.enableDrag = function () {
-                $("ul li").each(function () {
+                $(".card").each(function () {
                     $(this).draggable({
                         revert: 'invalid',
                         create: function (event, ui) {
@@ -832,6 +900,14 @@
                         stop: function () {
                             $(this).draggable('option', 'revert', 'invalid');
                             $(this).css({ opacity: 1 });
+                            var totalCount = $('.deckStack > li').length;
+                            var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
+                            var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
+
+                            $('#totalCardsInDeck').html(totalCount);
+                            $('#totalCreaturesInDeck').html(creatureCount);
+                            $('#totalLandsInDeck').html(landCount);
+                            $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
                         },
                         start: function () {
                             $(this).css({ opacity: 0 });
@@ -877,13 +953,14 @@
                 hoverClass: "ui-drop-hover",
                 accept: ":not(.ui-sortable-helper)",
                 drop: function (event, ui) {
-                    $('#totalCardsInDeck').html(function (i, val) { return val * 1 - 1 });
-                    if ($(ui.draggable).attr("type") == 'Creature') {
-                        $('#totalCreaturesInDeck').html(function (i, val) { return val * 1 - 1 });
-                    }
-                    else {
-                        $('#totalOtherInDeck').html(function (i, val) { return val * 1 - 1 });
-                    }
+                    var totalCount = $('.deckStack > li').length;
+                    var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
+                    var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
+
+                    $('#totalCardsInDeck').html(totalCount);
+                    $('#totalCreaturesInDeck').html(creatureCount);
+                    $('#totalLandsInDeck').html(landCount);
+                    $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
                     $(this).addClass("ui-state-highlight");
                     $(ui.draggable).appendTo(this);
                 }
@@ -895,16 +972,14 @@
                 hoverClass: "ui-drop-hover",
                 accept: ":not(.ui-sortable-helper)",
                 drop: function (event, ui) {
+                    var totalCount = $('.deckStack > li').length;
+                    var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
+                    var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
 
-                    if (sourceElement == "poolDiv") {
-                        $('#totalCardsInDeck').html(function (i, val) { return val * 1 + 1 });
-                        if ($(ui.draggable).attr("type") == 'Creature') {
-                            $('#totalCreaturesInDeck').html(function (i, val) { return val * 1 + 1 });
-                        }
-                        else {
-                            $('#totalOtherInDeck').html(function (i, val) { return val * 1 + 1 });
-                        }
-                    }
+                    $('#totalCardsInDeck').html(totalCount);
+                    $('#totalCreaturesInDeck').html(creatureCount);
+                    $('#totalLandsInDeck').html(landCount);
+                    $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
                     $(this).addClass("ui-state-highlight");
                     $(ui.draggable).appendTo(this);
                 }
@@ -913,26 +988,27 @@
             // Send a card from Pool to Deck (first column)
             $('.poolStack').on('dblclick', 'li', function () {
                 $(this).appendTo($('#deckPileW'));
-                $('#totalCardsInDeck').html(function (i, val) { return val * 1 + 1 });
-                if ($(this).attr("type") == 'Creature') {
-                    $('#totalCreaturesInDeck').html(function (i, val) { return val * 1 + 1 });
-                }
-                else {
-                    $('#totalOtherInDeck').html(function (i, val) { return val * 1 + 1 });
-                }
+                var totalCount = $('.deckStack > li').length;
+                var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
+                var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
+                
+                $('#totalCardsInDeck').html(totalCount);
+                $('#totalCreaturesInDeck').html(creatureCount);
+                $('#totalLandsInDeck').html(landCount);
+                $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
             });
 
             // Send a card back to POOL
             $(".deckStack").on('dblclick', 'li', function () {
-                $('#totalCardsInDeck').html(function (i, val) { return val * 1 - 1 });
-                if ($(this).attr("type") == 'Creature') {
-                    $('#totalCreaturesInDeck').html(function (i, val) { return val * 1 - 1 });
-                }
-                else {
-                    $('#totalOtherInDeck').html(function (i, val) { return val * 1 - 1 });
-                }
-                
                 $(this).appendTo('#poolPile' + $(this).attr("color"));
+                var totalCount = $('.deckStack > li').length;
+                var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
+                var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
+
+                $('#totalCardsInDeck').html(totalCount);
+                $('#totalCreaturesInDeck').html(creatureCount);
+                $('#totalLandsInDeck').html(landCount);
+                $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
             })
         });
 
@@ -979,12 +1055,6 @@
 
 </head>
 <body>
-    <section class="featured">
-            <asp:Panel runat="server" ID="defaultPanel">
-                </asp:Panel>
-    <!--<div class="context-menu-one box menu-1">
-        <strong>without title</strong>
-    </div>-->
     <div id="decklistDialog" style="background-color:white">
             <p id="decklistTextArea">
             </p>
@@ -1007,7 +1077,7 @@
             </tr>
         </table>
     </div>
-    <div style="background-color:darkgreen; border: 3px solid black; width:100%">
+    <div id="menuDiv" style="background-color:darkgreen; border: 3px solid black; width:100%">
         <table>
             <tr>
                 <td><img src="/Images/Pool.jpg" id="poolImage" width="120" alt="submit" /></td>    
