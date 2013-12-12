@@ -199,6 +199,7 @@
     <Content Include="JavaScript1.js" />
     <Content Include="magicSealedSite.html" />
     <Content Include="packages.config" />
+    <Content Include="SealedMagic.html" />
     <Content Include="zclip.js" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\splitter.js" />
