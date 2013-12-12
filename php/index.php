@@ -2,7 +2,6 @@
 header('Access-Control-Allow-Origin: *');
 
 
-
 class Card {
 	public $name = "";
 	public $color = "";
@@ -17,7 +16,10 @@ class Card {
 	public $foiled = false;
 };
 
-$cards = generateCardsFromTextFile();
+//$cards = generateCardsFromTextFile();
+
+$cards = generateCardsFromSqlDatabase();
+
 $commonCards = array();
 $uncommonCards = array();
 $rareCards = array();
