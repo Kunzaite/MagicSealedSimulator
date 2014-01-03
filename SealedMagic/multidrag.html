@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style type="text/css">
+    #selectable .ui-selecting {
+        background: #FECA40;
+
+    }
+    #selectable .ui-selected {
+        background: #F39814; color: white;
+
+    }
+    #selectable {
+        margin: 0; 
+        padding: 0; 
+        height: 300px; 
+        position: relative; 
+        padding:0; 
+        border:solid 1px #DDD;
+
+    }
+
+    #selectable > div {
+        position: absolute; 
+        margin: 0; 
+        padding:10px; 
+        border:solid 1px #CCC; 
+        width: 100px;
+
+    }
+    .ui-selectable-helper {
+        position: absolute; 
+        z-index: 100; 
+        border:1px dotted black;
+    }
+
+    </style>
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // this creates the selected variable
+            // we are going to store the selected objects in here
+            var selected = $([]), offset = { top: 0, left: 0 };
+
+            $("#selectable > div").draggable({
+                start: function (ev, ui) {
+                    if ($(this).hasClass("ui-selected")) {
+                        selected = $(".ui-selected").each(function () {
+                            var el = $(this);
+                            el.data("offset", el.offset());
+                        });
+                    }
+                    else {
+                        selected = $([]);
+                        $("#selectable > div").removeClass("ui-selected");
+                    }
+                    offset = $(this).offset();
+                },
+                drag: function (ev, ui) {
+                    var dt = ui.position.top - offset.top, dl = ui.position.left - offset.left;
+                    // take all the elements that are selected expect $("this"), which is the element being dragged and loop through each.
+                    selected.not(this).each(function () {
+                        // create the variable for we don't need to keep calling $("this")
+                        // el = current element we are on
+                        // off = what position was this element at when it was selected, before drag
+                        var el = $(this), off = el.data("offset");
+                        el.css({ top: off.top + dt, left: off.left + dl });
+                    });
+                }
+            });
+
+            $("#selectable").selectable();
+
+            // manually trigger the "select" of clicked elements
+            $("#selectable > div").click(function (e) {
+                if (e.metaKey == false) {
+                    // if command key is pressed don't deselect existing elements
+                    $("#selectable > div").removeClass("ui-selected");
+                    $(this).addClass("ui-selecting");
+                }
+                else {
+                    if ($(this).hasClass("ui-selected")) {
+                        // remove selected class from element if already selected
+                        $(this).removeClass("ui-selected");
+                    }
+                    else {
+                        // add selecting class if not
+                        $(this).addClass("ui-selecting");
+                    }
+                }
+
+                $("#selectable").data("selectable")._mouseStop(null);
+            });
+
+            // starting position of the divs
+            var i = 0;
+            $("#selectable > div").each(function () {
+                $(this).css({
+                    top: i * 42
+                });
+                i++;
+            });
+
+        });
+
+    </script>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+<div id="selectable">
+  <div class="ui-widget-content">Item 1</div>
+  <div class="ui-widget-content">Item 2</div>
+  <div class="ui-widget-content">Item 3</div>
+  <div class="ui-widget-content">Item 4</div>
+  <div class="ui-widget-content">Item 5</div>
+</div>
+
+
+
+</body>
+</html>

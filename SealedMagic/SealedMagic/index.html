@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style type="text/css">
+
+	.boosterSelect{
+		font-size:16px;
+	}
+
+	.boosterLabel{
+		font-size:20px;
+	}
+
+	.info{
+		text-align:center;
+
+	}
+
+	#bodyDiv{
+		margin:auto;
+        background-color:White;
+	}
+
+    .css-title:before {
+        content: "Sort by";
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        background: #DDD;
+        padding: 2px;
+    
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .css-title :first-child {
+    margin-top: 20px;
+}
+
+    #selectable {   
+        width:600px;
+        height:700px;
+        background:#b6ff00;
+        overflow:auto;
+    }
+    #selectable div {
+        background: #ffc;
+        line-height: 25px;
+        height: 25px;
+        width: 150px;
+        border: 1px solid #fcc;
+        }
+    #selectable div.ui-selected {
+        background: #fcaf3e;
+        }
+
+    #selectable div.ui-selected .mtgCard {
+        border: 3px solid red;
+        }
+
+    #selectable div.ui-selecting {
+        background: #8ae234;
+        }
+
+    /* dropdown */
+
+    p {
+    font-family: sans-serif;
+}
+
+label.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+    .custom-select select {
+        display: inline-block;
+        border: 2px solid #bbb;
+        padding: 4px 3px 3px 5px;
+        margin: 0;
+        font: inherit;
+        outline:none; /* remove focus ring from Webkit */
+        line-height: 1.2;
+        background: #f8f8f8;
+        
+        -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
+        
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+
+    /* for Webkit's CSS-only solution */
+    @media screen and (-webkit-min-device-pixel-ratio:0) { 
+        .custom-select select {
+            padding-right:30px;    
+        }
+    }
+    
+    /* Since we removed the default focus styles, we have to add our own */
+    .custom-select select:focus {
+        -webkit-box-shadow: 0 0 3px 1px #c00;
+        -moz-box-shadow: 0 0 3px 1px #c00;
+        box-shadow: 0 0 3px 1px #c00;
+    }
+    
+    /* Select arrow styling */
+    .custom-select:after {
+        content: "▼";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        font-size: 60%;
+        line-height: 30px;
+        padding: 0 7px;
+        background: #4197ee;
+        color: white;
+        
+        pointer-events:none;
+        
+        -webkit-border-radius: 0 6px 6px 0;
+        -moz-border-radius: 0 6px 6px 0;
+        border-radius: 0 6px 6px 0;
+    }
+    
+    .no-pointer-events .custom-select:after {
+        content: none;
+    }
+
+
+    .setButtons {
+	    -moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	    -webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	    box-shadow:inset 0px 1px 0px 0px #cae3fc;
+	    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
+	    background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
+	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
+	    background-color:#79bbff;
+	    -webkit-border-top-left-radius:20px;
+	    -moz-border-radius-topleft:20px;
+	    border-top-left-radius:20px;
+	    -webkit-border-top-right-radius:20px;
+	    -moz-border-radius-topright:20px;
+	    border-top-right-radius:20px;
+	    -webkit-border-bottom-right-radius:20px;
+	    -moz-border-radius-bottomright:20px;
+	    border-bottom-right-radius:20px;
+	    -webkit-border-bottom-left-radius:20px;
+	    -moz-border-radius-bottomleft:20px;
+	    border-bottom-left-radius:20px;
+	    text-indent:0;
+	    border:1px solid #469df5;
+	    display:inline-block;
+	    color:#000000;
+	    font-family:Arial;
+	    font-size:15px;
+	    font-style:normal;
+	    height:50px;
+	    line-height:50px;
+	    width:100px;
+	    text-decoration:none;
+	    text-align:center;
+	    text-shadow:1px 1px 0px #287ace;
+    }
+    .setButtons:hover {
+	    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
+	    background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
+	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
+	    background-color:#4197ee;
+    }.setButtons:active {
+	    position:relative;
+	    top:1px;
+    }
+    </style>
+    <link rel="stylesheet" href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js"></script>
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js"></script>
+    <script type="text/javascript">
+        'use strict;'
+        $(document).ready(function () {
+            $("#StartButton").hover(function () {
+                $(this).attr("src", "/Images/HoverStartButton.jpg");
+            }, function () {
+                $(this).attr("src", "/Images/StartButton.jpg");
+            });
+
+            $.getJSON("http://flamingfox.se/magiccarddb/sets.php", function (sets) {
+                var setList = [];
+
+                for (var i = 0; i < 6; i++)
+                {
+                    var paragraph = $('<p class="info"></p>');
+                    var x = $('<label class="custom-select"></label>');
+                    var $select = $('<select class="boosterSelect" id=options' + (i+1).toString() + '></select>');
+                    $.each(sets, function (index, set) {
+                        $select.append($("<option></option>").text(set.name).val(set.code));
+                    })
+                    
+                    $('#bodyDiv').append(paragraph.append(x.append($select)));
+                }
+
+                $('#startButton').click(function () {
+                    var boosterList = [];
+                    $('#bodyDiv').find('.boosterSelect').each(function (index, booster) {
+                        console.log($(booster).val());
+                        boosterList.push($(booster).val());
+                    });
+                    document.location.href = 'magicSealedSite.html' + '?' + $.param({ sets: boosterList })
+                });
+            });
+
+
+            $("#m14Button").click(function () {
+                $(".boosterSelect").val("M14");
+            });
+
+            $("#therosButton").click(function () {
+                $(".boosterSelect").val("THS");
+            });
+
+            $("#ravnicaButton").click(function () {
+                $("#options1").val("RTR");
+                $("#options2").val("RTR");
+                $("#options3").val("GTC");
+                $("#options4").val("GTC");
+                $("#options5").val("DGM");
+                $("#options6").val("DGM");
+            });
+
+        });
+
+
+
+        
+    </script>
+        
+</head>
+<body>
+<div >
+    <div style="background-image:url('/Images/blackBackground.jpg'); height:100px" ID="logoDiv">
+        <img src="/Images/SealedMagicLogo.jpg" title="A Magic Sealed Deck Simulator!" width="800px" style="position:absolute;  left:50%; margin-left:-400px"/>
+    </div>
+    <div style="text-align:center; padding:10px">
+    <label>Choose set: </label>
+        <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
+        <input type='button' value='Theros' class="setButtons" id='therosButton' />
+        <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
+    </div>
+    <div id="bodyDiv">              
+    </div>
+    <div style="background-color:white">
+        <p class="info" style="padding-top:6px">
+            <button id="startButton" title="Generate your sealed deck!" style="margin: 0px; padding: 0; padding-bottom:6px; vertical-align:middle; background-color: transparent; border: none;"><img src="/Images/StartButton.jpg" id="StartButton" width="80" alt="submit" /></button>
+        </p> 
+    </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" />
+    <link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery.ui.all.css" />
+    
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js"></script>
+    <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="script.js"></script>
+
+</head>
+<body>
+    <div id="decklistDialog" style="background-color:white; border: 3px solid grey;">
+            <p id="decklistTextArea">
+            </p>
+    </div>
+    <div id="addLandDialog" style="background-color:white; border: 3px solid grey;">
+        <table border="1" style="border-collapse:collapse; border-color:white">
+            <tr>
+                <td style="background-color:black"><img src="/Images/WhiteImage.jpg" width="50" alt="submit" /></td>
+                <td style="background-color:black"><img src="/Images/BlueImage.jpg" width="50" alt="submit" /></td>
+                <td style="background-color:black"><img src="/Images/BlackImage.jpg" width="50" alt="submit" /></td>
+                <td style="background-color:black"><img src="/Images/RedImage.jpg" width="50" alt="submit" /></td>
+                <td style="background-color:black"><img src="/Images/GreenImage.jpg" width="50" alt="submit" /></td>
+            </tr>
+            <tr>
+                <td><input type="number" id="addPlainsBox" onkeypress='validate(event)' value="0" min="0" max="99" style="background-color:#f6f3be; font-family:Vani; width:45px; font-size: 24px;" /></td>
+                <td><input type="number" id="addIslandBox" onkeypress='validate(event)' value="0" min="0" max="99" style="background-color:#2842fb; font-family:Vani; width:45px; font-size: 24px;" /></td>
+                <td><input type="number" id="addSwampBox" onkeypress='validate(event)' value="0" min="0" max="99" style="background-color:#6a6a6a; font-family:Vani; width:45px; font-size: 24px;" /></td>
+                <td><input type="number" id="addMountainBox" onkeypress='validate(event)' value="0" min="0" max="99" style="background-color:#fc020e; font-family:Vani; width:45px; font-size: 24px;" /></td>
+                <td><input type="number" id="addForestBox" onkeypress='validate(event)' value="0" min="0" max="99" style="background-color:#30e528; font-family:Vani; width:45px; font-size: 24px;" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="menuDiv" style="background-image:url('/Images/blackBackground.jpg'); padding-top:0px; padding-bottom:0px; border: 2px solid black; width:100%">
+        <table>
+            <tr>
+                <td>
+                    <table style="border-collapse:separate; border-spacing:0px; border-color:black">
+                        <tr>
+                            <td><img src="/Images/Pool.jpg" id="poolImage" height="30" alt="submit" style="border: 2px solid black" /></td>  
+                            <td><img src="/Images/SortByImage.jpg" id="Img4" height="30" alt="submit" style="border: 2px solid black" /></td>
+                            <td><button id="sortColorPoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" onclick="return false;"><img src="/Images/ColorButton.png" id="poolColorButton" class="sortPoolButtonImages" alt="submit" /></button></td>
+                            <td><button id="sortCostPoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" onclick="return false;"><img src="/Images/CostButton.png" id="poolCostButton" class="sortPoolButtonImages" alt="submit" /></button></td>
+                            <td><button id="sortRarityPoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;"  onclick="return false;"><img src="/Images/RarityButton.png" id="poolRarityButton" class="sortPoolButtonImages" alt="submit" /></button></td>
+                            <td><button id="sortTypePoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" onclick="return false;"><img src="/Images/TypeButton.png" id="poolTypeButton" class="sortPoolButtonImages" alt="submit" /></button></td>
+                        </tr>
+                    </table>
+                </td>  
+                <td><span class="tab"></span></td>
+                <td>
+                    <table style="border-collapse:collapse">
+                        <tr>
+                            <td style="background-color:black"><img src="/Images/ToggleImage.jpg" id="Img5" height="30" alt="submit" /></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="whiteShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/WButton.png" class="toggleButtonImages" id="WButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="blueShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/UButton.png" class="toggleButtonImages" id="UButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="blackShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/BButton.png" class="toggleButtonImages" id="BButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="redShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/RButton.png" class="toggleButtonImages" id="RButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="greenShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/GButton.png" class="toggleButtonImages" id="GButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="multicolorShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/MButton.png" class="toggleButtonImages" id="MButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="artifactShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/AButton.png" class="toggleButtonImages" id="AButton" alt="submit" /></button></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="landShowHideButton" class="toggleButtons" onclick="return false;"><img src="/Images/LButton.png" class="toggleButtonImages" id="LButton" alt="submit" /></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td><label style="color:white">Total:</label><label id="totalCardsInPoolArea" style="color:white"></label></td>
+                <td><span class="tab"></span></td>
+                <td><button style="margin: 0px; width:70px; height:32px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="restoreDeckButton" onclick="return false;"><img src="/Images/RestoreButton.png" id="RestoreButton" height="30" class="RestoreButtomImages" alt="submit" /></button></td>
+            </tr>
+        </table>
+    </div>
+<div id="dragDropContainer">
+<div id="mainContainer">
+    <div id="poolDiv">
+	    <div id="pile1div">
+            <ul id="poolPileW" class="poolStack" style="height: 500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile2div">
+		    <ul id="poolPileU" class="poolStack" style=" list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile3div">
+		    <ul id="poolPileB" class="poolStack" style=" list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile4div">
+		    <ul id="poolPileR" class="poolStack">
+		    </ul>
+	    </div>
+	    <div id="pile5div">
+		    <ul id="poolPileG" class="poolStack">
+		    </ul>
+	    </div>
+	    <div id="pile6div">
+		    <ul id="poolPileM" class="poolStack">
+		    </ul>
+	    </div>
+	    <div id="pile7div">
+		    <ul id="poolPileAL" class="poolStack">
+		    </ul>
+	    </div>   
+    </div>
+    <div style="background-color:white; width:100%" id="draggableMiddleDiv">
+    </div>
+    <div style="background-image:url('/Images/blackBackground.jpg'); border: 2px solid black; width:100%" >
+    <table>
+        <tr>
+            <td>
+                <table style="border-collapse:collapse">
+                    <tr>
+                        <td><img src="/Images/Deck.jpg" id="Img2" height="30" alt="submit" style="border: 2px solid black" /></td>
+                        <td><img src="/Images/SortByImage.jpg" id="Img3" height="30" alt="submit" style="border: 2px solid black" /></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="sortColorDeckButton" onclick="return false;"><img src="/Images/ColorButton.png" id="deckColorButton" class="sortDeckButtonImages" alt="submit" /></button></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="sortCostDeckButton" onclick="return false;"><img src="/Images/CostButton.png" id="deckCostButton" class="sortDeckButtonImages" alt="submit" /></button></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="sortRarityDeckButton" onclick="return false;"><img src="/Images/RarityButton.png" id="deckRarityButton" class="sortDeckButtonImages" alt="submit" /></button></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="sortTypeDeckButton" onclick="return false;"><img src="/Images/TypeButton.png" id="deckTypeButton" class="sortDeckButtonImages" alt="submit" /></button></td>
+                    </tr>
+                </table>
+
+            </td>
+            <td><span class="tab"></span></td>
+            <td>
+                <table style="border-collapse:collapse">
+                    <tr>
+                        <td><img src="/Images/AddImage.jpg" id="Img1" height="30" alt="submit" /></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="addLandsButton" onclick="return false;"><img src="/Images/AddLButton.png" id="addLButton" class="AddButtonImages" alt="submit" /></button></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="openDecklistButton" onclick="return false;"><img src="/Images/DecklistButton.png" id="decklistButton" class="AddButtonImages" alt="submit" /></button></td>
+                    </tr>
+                </table>
+            </td>
+            <td><span class="tab"></span></td>
+            <td><label style="color:white">Total:</label><label id="totalCardsInDeck" style="color:white"></label></td>
+            <td><label style="color:white">Creatures: </label><label id="totalCreaturesInDeck" style="color:white"></label></td>
+            <td><label style="color:white">Other: </label><label id="totalOtherInDeck" style="color:white"></label></td>
+            <td><label style="color:white">Lands: </label><label id="totalLandsInDeck" style="color:white"></label></td>
+        </tr>
+    </table>
+    
+    </div>
+    <div id="deckDiv">
+	    <div id="pile1Deckdiv">
+		    <ul id="deckPileW" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile2Deckdiv">
+		    <ul id="deckPileU" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile3Deckdiv">
+		    <ul id="deckPileB" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile4Deckdiv"">
+		    <ul id="deckPileR" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile5Deckdiv">
+		    <ul id="deckPileG" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile6Deckdiv">
+		    <ul id="deckPileM" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+	    <div id="pile7Deckdiv">
+		    <ul id="deckPileAL" class="deckStack" style="height:500px; list-style-type:none">
+		    </ul>
+	    </div>
+
+    </div>
+</div>
+</div>
+        <div id="draggablePreviewImage">   
+            <div class="rotatable">
+	            <div id="previewDiv" class="resizable" runat="server" style="border: 6px solid black; background-color:black">
+                    <img id="previewImage" src="/Images/mtgBack.jpg" />
+	            </div>
+            </div>
+        </div> 
+</body>
+</html>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+</head>
+    </html>
+
+<div id="selectable">
+    <div style="position: relative; left: 0; top: 0;">
+      <img src="/Images/mtgBack.jpg" width="150px" class="mtgCard" style="position: relative; top: 0; left: 0;"/>
+    </div>
+    <div style="position: relative; left: 0; top: 0;">
+      <img src="/Images/mtgBack.jpg" width="150px" class="mtgCard"  style="position: relative; top: 0; left: 0;"/>
+    </div>
+    <div style="position: relative; left: 0; top: 0;">
+      <img src="/Images/mtgBack.jpg" width="150px" class="mtgCard"  style="position: relative; top: 0; left: 0;"/>
+      <img src="/Images/foil.png" style="position: absolute; top: 30px; left: 70px;"/>
+    </div>
+
+
+
+</div>
+
+
+            $(function () {
+                $.contextMenu({
+                    selector: '#selectable',
+                    className: 'css-title',
+                    callback: function (key, options) {
+                        var m = "clicked: " + key;
+                        window.console && console.log(m) || alert(m);
+                    },
+                    items: {
+                        "Color": { name: "Color" },
+                        "Cost": { name: "Cost" },
+                        "Rarity": { name: "Rarity" },
+                        "Type": { name: "Type" },
+                    }
+                });
+
+                $('.context-menu-one').on('click', function (e) {
+                    console.log('clicked', this);
+                })
+            });
+
+            var selected = $([]), offset = { top: 0, left: 0 };
+
+            // initiate the selectable id to be recognized by UI
+            $("#selectable").selectable({
+                filter: 'div',
+            });
+
+            // declare draggable UI and what we are going to be doing on start
+            $("#selectable div").draggable({
+                start: function (ev, ui) {
+                    selected = $(".ui-selected").each(function () {
+                        var el = $(this);
+                        console.log("The value of el is: " + el);
+                        el.data("offset", el.offset());
+                    });
+
+                    if (!$(this).hasClass("ui-selected")) $(this).addClass("ui-selected");
+                    offset = $(this).offset();
+                },
+                drag: function (ev, ui) {
+                    var dt = ui.position.top - offset.top, dl = ui.position.left - offset.left;
+                    // take all the elements that are selected expect $("this"), which is the element being dragged and loop through each.
+                    selected.not(this).each(function () {
+                        // create the variable for we don't need to keep calling $("this")
+                        // el = current element we are on
+                        // off = what position was this element at when it was selected, before drag
+                        var el = $(this), off = el.data("offset");
+                        el.css({ top: offset.top + dt, left: off.left + dl });
+                        console.log("The value of ui.position.top is " + ui.position.top);
+                        console.log("The value of ui.position.left is " + ui.position.left);
+                        console.log("The value of offset.top is " + offset.top);
+                        console.log("The value of offset.left is " + offset.left);
+                    });
+                }
+            });
