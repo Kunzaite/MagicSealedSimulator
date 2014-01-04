@@ -66,7 +66,7 @@ $(document).ready(function () {
                     $("#poolPile" + cardcolor)
                         .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity)
                             .append($('<div></div>').addClass("cardDiv")
-                                .append($('<img src="/Images/foil.png" />').addClass("foilImages"))
+                                .append($('<img src="Images/foil.png" />').addClass("foilImages"))
                                 .append($('<img src="' + encodeURI(card.image) + '" />').addClass("cardImages"))));
                         
                 }
@@ -176,42 +176,42 @@ $(document).ready(function () {
     $('#totalLandsInDeck').html("0");
 
     $(".AddButtonImages").hover(function () {
-        $(this).attr("src", "/Images/Hover" + $(this).attr("id") + ".png");
+        $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
 
     }, function () {
-        $(this).attr("src", "/Images/" + $(this).attr("id") + ".png");
+        $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
     });
 
     $(".RestoreButtomImages").hover(function () {
-        $(this).attr("src", "/Images/Hover" + $(this).attr("id") + ".png");
+        $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
 
     }, function () {
-        $(this).attr("src", "/Images/" + $(this).attr("id") + ".png");
+        $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
     });
 
     $(".sortPoolButtonImages").hover(function () {
-        $(this).attr("src", "/Images/HoverPool" + $(this).attr("id").substring(4) + ".png");
+        $(this).attr("src", "Images/HoverPool" + $(this).attr("id").substring(4) + ".png");
 
     }, function () {
         if ($(this).attr("clicked") == 1) {
-            $(this).attr("src", "/Images/SelectedPool" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/SelectedPool" + $(this).attr("id").substring(4) + ".png");
         }
 
         else {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         }
     });
 
     $(".sortDeckButtonImages").hover(function () {
-        $(this).attr("src", "/Images/HoverDeck" + $(this).attr("id").substring(4) + ".png");
+        $(this).attr("src", "Images/HoverDeck" + $(this).attr("id").substring(4) + ".png");
 
     }, function () {
         if ($(this).attr("clicked") == 1) {
-            $(this).attr("src", "/Images/SelectedDeck" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/SelectedDeck" + $(this).attr("id").substring(4) + ".png");
         }
 
         else {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         }
 
     });
@@ -219,20 +219,20 @@ $(document).ready(function () {
     // Hover over toggleButtons
     $(".toggleButtonImages").hover(function () {
         if ($(this).attr("toggled") == 1) {
-            $(this).attr("src", "/Images/ToggledHover" + $(this).attr("id") + ".jpg");
+            $(this).attr("src", "Images/ToggledHover" + $(this).attr("id") + ".jpg");
         }
 
         else {
-            $(this).attr("src", "/Images/Hover" + $(this).attr("id") + ".jpg");
+            $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".jpg");
         }
 
     }, function () {
         if ($(this).attr("toggled") == 1) {
-            $(this).attr("src", "/Images/Toggled" + $(this).attr("id") + ".jpg");
+            $(this).attr("src", "Images/Toggled" + $(this).attr("id") + ".jpg");
         }
 
         else {
-            $(this).attr("src", "/Images/" + $(this).attr("id") + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
         }
 
     });
@@ -444,12 +444,12 @@ $(function () {
 
         if ($($(this).children('img')).attr("toggled") == 0) {
             $($(this).children('img')).attr("toggled", "1");
-            $($(this).children('img')).attr("src", "/Images/Toggled" + $(this).children('img').attr("id") + ".jpg");
+            $($(this).children('img')).attr("src", "Images/Toggled" + $(this).children('img').attr("id") + ".jpg");
         }
 
         else {
             $($(this).children('img')).attr("toggled", "0");
-            $($(this).children('img')).attr("src", "/Images/" + $(this).children('img').attr("id") + ".png");
+            $($(this).children('img')).attr("src", "Images/" + $(this).children('img').attr("id") + ".png");
         }
 
         var color = $(this).children('img').attr("id");
@@ -471,9 +471,9 @@ $(function () {
         $('.sortDeckButtonImages').attr("clicked", "0");
         $("#deckColorButton").attr("clicked", "1");
         $('.sortDeckButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#deckColorButton").attr("src", "/Images/SelectedDeckColorButton.png");
+        $("#deckColorButton").attr("src", "Images/SelectedDeckColorButton.png");
 
         $(elems).each(function () {
 
@@ -491,9 +491,9 @@ $(function () {
         $('.sortDeckButtonImages').attr("clicked", "0");
         $("#deckCostButton").attr("clicked", "1");
         $('.sortDeckButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#deckCostButton").attr("src", "/Images/SelectedDeckCostButton.png");
+        $("#deckCostButton").attr("src", "Images/SelectedDeckCostButton.png");
 
         elems.sort(function (a, b) {
             return parseInt($(a).attr("cmc")) < parseInt($(b).attr("cmc")) ? 1 : -1;
@@ -522,9 +522,9 @@ $(function () {
         $('.sortDeckButtonImages').attr("clicked", "0");
         $("#deckRarityButton").attr("clicked", "1");
         $('.sortDeckButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#deckRarityButton").attr("src", "/Images/SelectedDeckRarityButton.png");
+        $("#deckRarityButton").attr("src", "Images/SelectedDeckRarityButton.png");
 
         $(elems).each(function () {
             if ($(this).attr("rarity") == "R" || $(this).attr("rarity") == "M") {
@@ -560,9 +560,9 @@ $(function () {
         $('.sortDeckButtonImages').attr("clicked", "0");
         $("#deckTypeButton").attr("clicked", "1");
         $('.sortDeckButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#deckTypeButton").attr("src", "/Images/SelectedDeckTypeButton.png");
+        $("#deckTypeButton").attr("src", "Images/SelectedDeckTypeButton.png");
 
         $(elems).each(function () {
             if ($(this).attr("type") == "Creature") {
@@ -608,9 +608,9 @@ $(function () {
         $('.sortPoolButtonImages').attr("clicked", "0");
         $("#poolColorButton").attr("clicked", "1");
         $('.sortPoolButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#poolColorButton").attr("src", "/Images/SelectedPoolColorButton.png");
+        $("#poolColorButton").attr("src", "Images/SelectedPoolColorButton.png");
 
         $(elems).each(function () {
             $(this).appendTo('#poolPile' + $(this).attr("color"));
@@ -625,9 +625,9 @@ $(function () {
         $('.sortPoolButtonImages').attr("clicked", "0");
         $("#poolCostButton").attr("clicked", "1");
         $('.sortPoolButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#poolCostButton").attr("src", "/Images/SelectedPoolCostButton.png");
+        $("#poolCostButton").attr("src", "Images/SelectedPoolCostButton.png");
 
         elems.sort(function (a, b) {
             return parseInt($(a).attr("cmc")) < parseInt($(b).attr("cmc")) ? 1 : -1;
@@ -653,9 +653,9 @@ $(function () {
         $('.sortPoolButtonImages').attr("clicked", "0");
         $("#poolRarityButton").attr("clicked", "1");
         $('.sortPoolButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#poolRarityButton").attr("src", "/Images/SelectedPoolRarityButton.png");
+        $("#poolRarityButton").attr("src", "Images/SelectedPoolRarityButton.png");
 
         $(elems).each(function () {
             if ($(this).attr("rarity") == "R" || $(this).attr("rarity") == "M") {
@@ -690,9 +690,9 @@ $(function () {
         $('.sortPoolButtonImages').attr("clicked", "0");
         $("#poolTypeButton").attr("clicked", "1");
         $('.sortPoolButtonImages').each(function () {
-            $(this).attr("src", "/Images/" + $(this).attr("id").substring(4) + ".png");
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
         });
-        $("#poolTypeButton").attr("src", "/Images/SelectedPoolTypeButton.png");
+        $("#poolTypeButton").attr("src", "Images/SelectedPoolTypeButton.png");
 
         $(elems).each(function () {
             if ($(this).attr("type") == "Creature") {
