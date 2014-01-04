@@ -134,7 +134,7 @@ $(document).ready(function () {
             $(this).hide();
     });
 
-    $("#draggablePreviewImage").offset({ top: 400, left: 800 })
+    $("#draggablePreviewImage").offset({ top: 200, left: 800 })
 
     $("#tabs").tabs();
 
