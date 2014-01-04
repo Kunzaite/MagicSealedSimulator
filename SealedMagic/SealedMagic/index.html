@@ -189,9 +189,9 @@ label.custom-select {
         'use strict;'
         $(document).ready(function () {
             $("#StartButton").hover(function () {
-                $(this).attr("src", "/Images/HoverStartButton.jpg");
+                $(this).attr("src", "Images/HoverStartButton.jpg");
             }, function () {
-                $(this).attr("src", "/Images/StartButton.jpg");
+                $(this).attr("src", "Images/StartButton.jpg");
             });
 
             $.getJSON("http://flamingfox.se/magiccarddb/sets.php", function (sets) {
@@ -247,8 +247,8 @@ label.custom-select {
 </head>
 <body>
 <div >
-    <div style="background-image:url('/Images/blackBackground.jpg'); height:100px" ID="logoDiv">
-        <img src="/Images/SealedMagicLogo.jpg" title="A Magic Sealed Deck Simulator!" width="800px" style="position:absolute;  left:50%; margin-left:-400px"/>
+    <div style="background-image:url('Images/blackBackground.jpg'); height:100px" ID="logoDiv">
+        <img src="Images/SealedMagicLogo.jpg" title="A Magic Sealed Deck Simulator!" width="800px" style="position:absolute;  left:50%; margin-left:-400px"/>
     </div>
     <div style="text-align:center; padding:10px">
     <label>Choose set: </label>
@@ -260,7 +260,7 @@ label.custom-select {
     </div>
     <div style="background-color:white">
         <p class="info" style="padding-top:6px">
-            <button id="startButton" title="Generate your sealed deck!" style="margin: 0px; padding: 0; padding-bottom:6px; vertical-align:middle; background-color: transparent; border: none;"><img src="/Images/StartButton.jpg" id="StartButton" width="80" alt="submit" /></button>
+            <button id="startButton" title="Generate your sealed deck!" style="margin: 0px; padding: 0; padding-bottom:6px; vertical-align:middle; background-color: transparent; border: none;"><img src="Images/StartButton.jpg" id="StartButton" width="80" alt="submit" /></button>
         </p> 
     </div>
 
