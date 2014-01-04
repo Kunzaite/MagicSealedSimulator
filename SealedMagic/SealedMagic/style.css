@@ -91,7 +91,7 @@ margin-top: 20px;
 #poolDiv
 {
 	overflow:auto;
-	background-image: url("/Images/redBackground.jpg");
+	background-image: url("Images/redBackground.jpg");
 }
 
 
@@ -106,7 +106,7 @@ margin-top: 20px;
 #deckDiv
 {
 	overflow:auto;
-	background-image: url("/Images/greenBackground.jpg");
+	background-image: url("Images/greenBackground.jpg");
 }
 
 #deckDiv div 
