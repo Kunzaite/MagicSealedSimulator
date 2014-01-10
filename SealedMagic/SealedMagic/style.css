@@ -3,8 +3,6 @@
 	background-color:#E2EBED;
 }
 
-
-
 #draggablePreviewImage
 {
     position: absolute; 
@@ -34,7 +32,6 @@
     border: 1px solid #FFF;
     width: 9px;
     height: 9px;
-    
     z-index: 2;
 }
     
@@ -58,42 +55,19 @@ margin-top: 20px;
 }
 
 
-/* demo trigger boxes */
-.box {
-    color: #EEE;
-    background: #666;
-    font-weight: bold;
-    padding: 20px;
-    text-align: center;
-    font-size: 20px;
-    margin: 5px 0;
-}
-.box:hover {
-    background: #777;
-}
-.box > * {
-    display:block;
-}
-.menu-injected { background-color: #C87958; }
-.box.context-menu-disabled { background-color: red; }
-
 #draggableMiddleDiv
 { 
 	width:100%;
-	height: 10px; 
 	cursor: row-resize; 
 	left: 0; 
-	border:1px solid grey;
 	position:absolute;
-    margin-bottom:50px;	
 }
 
 #poolDiv
 {
-	overflow:auto;
+	overflow:hidden;
 	background-image: url("Images/redBackground.jpg");
 }
-
 
 
 #poolDiv div 
@@ -105,7 +79,7 @@ margin-top: 20px;
 
 #deckDiv
 {
-	overflow:auto;
+	overflow:hidden;
 	background-image: url("Images/greenBackground.jpg");
 }
 
@@ -148,11 +122,14 @@ div#mainContainer{	/* Right column DIV */
     border: 3px solid silver;
 }
 
-#mainContainer div{	/* Parent <div> of small boxes */
+.pileDeckDivs {
+    padding-top:50px;
+}
+
+#mainContainer div:not(#deckMenuDiv) {	/* Parent <div> of small boxes */
     /**float:left;*/
-	margin-right:10px;
-	margin-bottom:10px;
 	margin-top:0px;
+    margin-right:5px;
 	border-left:2px solid #000000;
 
 }
@@ -162,7 +139,7 @@ padding: 0 50px;
 }
 
 #mainContainer ul{	/* Small box in right column ,i.e <ul> */
-	width:185px;
+	width:190px;
 	height:80px;
 	border:0px;
 	margin-bottom:0px;
@@ -240,10 +217,6 @@ body{
     position: absolute; 
     z-index: 100; 
     border:1px dotted white;
-}
-
-.cardImages.selected {
-    border: 6px solid silver;
 }
 
 li.ui-selected .cardImages {

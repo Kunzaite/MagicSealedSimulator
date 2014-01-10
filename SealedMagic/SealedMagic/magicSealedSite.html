@@ -40,8 +40,8 @@
             </tr>
         </table>
     </div>
-
-    <div id="menuDiv" style="background-image:url('Images/blackBackground.jpg'); padding-top:0px; padding-bottom:0px; border: 2px solid black; width:100%">
+<div id="topDiv">
+    <div id="poolMenuDiv" style="background-image:url('Images/blackBackground.jpg'); padding-top:0px; padding-bottom:0px; border: 3px solid black; width:100%">
         <table>
             <tr>
                 <td>
@@ -78,11 +78,12 @@
             </tr>
         </table>
     </div>
+</div>
 <div id="dragDropContainer">
 <div id="mainContainer">
     <div id="poolDiv">
 	    <div id="pile1div">
-            <ul id="poolPileW" class="poolStack" style="height: 500px; list-style-type:none">
+            <ul id="poolPileW" class="poolStack" style="height: 700px; list-style-type:none">
 		    </ul>
 	    </div>
 	    <div id="pile2div">
@@ -111,12 +112,11 @@
 	    </div>   
     </div>
     <div style="background-color:white; width:100%" id="draggableMiddleDiv">
-    </div>
-    <div style="background-image:url('Images/blackBackground.jpg'); border: 2px solid black; width:100%" >
+    <div id="deckMenuDiv" style="background-image:url('Images/blackBackground.jpg'); padding-top:0px; padding-bottom:0px; border: 2px solid black; width:100%">
     <table>
         <tr>
             <td>
-                <table style="border-collapse:collapse">
+                <table style="border-collapse:separate; border-spacing:0px; border-color:black">
                     <tr>
                         <td><img src="Images/Deck.jpg" id="Img2" height="30" alt="submit" style="border: 2px solid black" /></td>
                         <td><img src="Images/SortByImage.jpg" id="Img3" height="30" alt="submit" style="border: 2px solid black" /></td>
@@ -133,7 +133,7 @@
                 <table style="border-collapse:collapse">
                     <tr>
                         <td><img src="Images/AddImage.jpg" id="Img1" height="30" alt="submit" /></td>
-                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="addLandsButton" onclick="return false;"><img src="Images/AddLButton.png" id="AddLButton" class="AddButtonImages" alt="submit" title="Add lands to your deck" /></button></td>
+                        <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="openAddLButton" onclick="return false;"><img src="Images/AddLButton.png" id="AddLButton" class="AddButtonImages" alt="submit" title="Add lands to your deck" /></button></td>
                         <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="openDecklistButton" onclick="return false;"><img src="Images/DecklistButton.png" id="DecklistButton" class="AddButtonImages" alt="submit" title="show a decklist in MWS format" /></button></td>
                     </tr>
                 </table>
@@ -145,34 +145,34 @@
             <td><label style="color:white">Lands: </label><label id="totalLandsInDeck" style="color:white"></label></td>
         </tr>
     </table>
-    
+    </div>
     </div>
     <div id="deckDiv">
-	    <div id="pile1Deckdiv">
+	    <div id="pile1Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileW" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile2Deckdiv">
+	    <div id="pile2Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileU" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile3Deckdiv">
+	    <div id="pile3Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileB" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile4Deckdiv"">
+	    <div id="pile4Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileR" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile5Deckdiv">
+	    <div id="pile5Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileG" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile6Deckdiv">
+	    <div id="pile6Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileM" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
-	    <div id="pile7Deckdiv">
+	    <div id="pile7Deckdiv" class="pileDeckDivs">
 		    <ul id="deckPileAL" class="deckStack" style="height:500px; list-style-type:none">
 		    </ul>
 	    </div>
