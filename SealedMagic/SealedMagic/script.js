@@ -306,7 +306,8 @@ $(document).ready(function () {
         var elems = $('.deckStack > li');
         var numberOfEachColorList = [0, 0, 0, 0, 0];
         var numberOfEachLandList = [];
-
+        console.log("number of elem" + elems.length);
+        var totalNumberOfSymbols = 0;
         $(elems).each(function () {
 
             var manacost = $(this).attr("manacost");
@@ -316,23 +317,29 @@ $(document).ready(function () {
             for (var i = 0; i < manacost.length; i++) {
                 if (manacost[i] == 'W') {
                     numberOfEachColorList[0] = numberOfEachColorList[0] + 1;
+                    totalNumberOfSymbols++;
                 }
 
                 if (manacost[i] == 'U') {
-                    numberOfEachColorList[1] = numberOfEachColorList[0] + 1;
+                    numberOfEachColorList[1] = numberOfEachColorList[1] + 1;
+                    totalNumberOfSymbols++;
                 }
 
                 if (manacost[i] == 'B') {
-                    numberOfEachColorList[2] = numberOfEachColorList[0] + 1;
+                    numberOfEachColorList[2] = numberOfEachColorList[2] + 1;
+                    totalNumberOfSymbols++;
                 }
 
                 if (manacost[i] == 'R') {
-                    numberOfEachColorList[3] = numberOfEachColorList[0] + 1;
+                    numberOfEachColorList[3] = numberOfEachColorList[3] + 1;
+                    totalNumberOfSymbols++;
                 }
 
                 if (manacost[i] == 'G') {
-                    numberOfEachColorList[4] = numberOfEachColorList[0] + 1;
+                    numberOfEachColorList[4] = numberOfEachColorList[4] + 1;
+                    totalNumberOfSymbols++;
                 }
+
             }
         });
 
@@ -340,7 +347,8 @@ $(document).ready(function () {
         var numberOfLands = 40 - totalNonLandCards;
 
         for (var i = 0; i < numberOfEachColorList.length; i++) {
-            numberOfEachLandList[i] = parseInt(parseFloat(numberOfEachColorList[i] / totalNonLandCards) * numberOfLands);
+            console.log(i + ": " + numberOfEachColorList[i]);
+            numberOfEachLandList[i] = parseInt(Math.round(parseFloat(numberOfEachColorList[i] / totalNumberOfSymbols * numberOfLands)));
         }
 
         $('#addPlainsBox').val(numberOfEachLandList[0]);
