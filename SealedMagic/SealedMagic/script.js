@@ -90,7 +90,7 @@ $(document).ready(function () {
         });
 
         $('#totalCardsInPoolArea').html($('.poolStack > li').length);
-        $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["M"] + "A/L: " + cardColorCardinality["AL"]);
+        $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["M"] + "\nA/L: " + cardColorCardinality["AL"]);
         $("#WButton").attr("title", "White: " + cardColorCardinality["W"] + " cards.");
         $("#UButton").attr("title", "Blue: " + cardColorCardinality["U"] + " cards.");
         $("#BButton").attr("title", "Black: " + cardColorCardinality["B"] + " cards.");
@@ -170,7 +170,7 @@ $(document).ready(function () {
         maxWidth: 250,
     });
 
-    var size = 636;
+    var size = 400;
     var elems = $("#poolDiv").find('ul');
     $(elems).each(function () {
         $(this).css('height', size + 'px');
@@ -866,11 +866,6 @@ $(function () {
 
     // Set every ul to droppable in POOL
     $(".poolStack").droppable({
-        accept: function (d) {
-            if (d.hasClass("card")) {
-                return true;
-            }
-        },
         drop: function (event, ui) {
             var totalCount = $('.deckStack > li').length;
             var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
@@ -889,7 +884,6 @@ $(function () {
 
     // Set every ul to droppable in DECK
     $(".deckStack").droppable({
-        accept: ":not(.resizable)",
         drop: function (event, ui) {
             var totalCount = $('.deckStack > li').length;
             var creatureCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=Creature]').length;
