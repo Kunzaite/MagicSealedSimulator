@@ -32,6 +32,7 @@ $(document).ready(function () {
         $.each(result.boosters, function (index, booster) {
             $.each(booster, function (index, card) {
                 var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace("-", "").replace("(", "").replace(")", "").toLowerCase();
+                console.log("name " + cardname);
                 var cardcolor = "";
                 var cardtype = "";
                 if (card.type.indexOf("Creature") != -1) {
@@ -83,6 +84,18 @@ $(document).ready(function () {
 
             $.enableDrag();
             //$.enableSelect();
+
+            var position = $("#draggableMiddleDiv").position();
+            var topPos = position.top;
+            var divHeight = $(window).height();
+
+            var poolDiv = topPos;
+            var deckDiv = divHeight - topPos;
+            deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
+
+            $('.pileDeckDivs').css('padding-top', '50px');
+            $('#poolDiv').height(poolDiv);
+            $('#deckDiv').height(deckDiv);
         });
 
         $(".card:last-child").each(function () {
@@ -170,7 +183,7 @@ $(document).ready(function () {
         maxWidth: 250,
     });
 
-    var size = 400;
+    var size = ($(window).height() / 2) - 200;
     var elems = $("#poolDiv").find('ul');
     $(elems).each(function () {
         $(this).css('height', size + 'px');
@@ -183,6 +196,11 @@ $(document).ready(function () {
 
     $('.toggleButtonImages').attr("toggled", "0");
     $('.sortPoolButtonImages').attr("clicked", "0");
+    $("#poolColorButton").attr("clicked", "1");
+    $("#poolColorButton").attr("src", "Images/SelectedPoolColorButton.png");
+    $("#deckColorButton").attr("clicked", "1");
+    $("#deckColorButton").attr("src", "Images/SelectedDeckColorButton.png");
+
     $('#totalCreaturesInDeck').html("0");
     $('#totalCardsInDeck').html("0");
     $('#totalOtherInDeck').html("0");
@@ -195,7 +213,14 @@ $(document).ready(function () {
         $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
     });
 
-    $(".RestoreButtomImages").hover(function () {
+    $(".RestoreButtonImages").hover(function () {
+        $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
+
+    }, function () {
+        $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
+    });
+
+    $("#NewButton").hover(function () {
         $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
 
     }, function () {
@@ -348,7 +373,7 @@ $(document).ready(function () {
 
         for (var i = 0; i < numberOfEachColorList.length; i++) {
             console.log(i + ": " + numberOfEachColorList[i]);
-            numberOfEachLandList[i] = parseInt(Math.round(parseFloat(numberOfEachColorList[i] / totalNumberOfSymbols * numberOfLands)));
+            numberOfEachLandList[i] = parseInt(Math.round(parseFloat(numberOfEachColorList[i] / totalNumberOfSymbols * numberOfLands))) || 0;
         }
 
         $('#addPlainsBox').val(numberOfEachLandList[0]);
@@ -427,13 +452,36 @@ $(document).ready(function () {
 
 $(function () {
     $("#restoreDeckButton").click(function () {
+        $('.toggleButtonImages').attr("toggled", "0");
+        $('.toggleButtonImages').each(function () {
+            $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
+        });
+
+        $('#totalCardsInPoolArea').html($('.poolStack > li').length);
+        $('#totalCardsInDeck').html("0");
+        $('#totalCreaturesInDeck').html("0");
+        $('#totalLandsInDeck').html("0");
+        $('#totalOtherInDeck').html("0");
+
+        $('.sortPoolButtonImages').attr("clicked", "0");
+        $('.sortPoolButtonImages').each(function () {
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
+        });
+        $("#poolColorButton").attr("clicked", "1");
+        $("#poolColorButton").attr("src", "Images/SelectedPoolColorButton.png");
+
+        $('.sortDeckButtonImages').attr("clicked", "0");
+        $('.sortDeckButtonImages').each(function () {
+            $(this).attr("src", "Images/" + $(this).attr("id").substring(4) + ".png");
+        });
+
+        $("#deckColorButton").attr("clicked", "1");
+        $("#deckColorButton").attr("src", "Images/SelectedDeckColorButton.png");
+
         $("ul li").each(function () {
 
-            $('#totalCardsInPoolArea').html($('.poolStack > li').length);
-            $('#totalCardsInDeck').html("0");
-            $('#totalCreaturesInDeck').html("0");
-            $('#totalLandsInDeck').html("0");
-            $('#totalOtherInDeck').html("0");
+
+            $(this).show();
 
             if ($(this).attr("type") == "BasicLand") {
                 $(this).remove();
@@ -444,6 +492,13 @@ $(function () {
             }
 
         });
+    });
+});
+
+
+$(function () {
+    $("#newButton").click(function () {
+        location.reload(true);
     });
 });
 
@@ -490,6 +545,9 @@ $(function () {
 
         });
         $.enableDrag();
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     });
 });
 
@@ -521,6 +579,9 @@ $(function () {
 
         });
         $.enableDrag();
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     });
 });
 
@@ -559,6 +620,9 @@ $(function () {
             }
         });
         $.enableDrag();
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     });
 });
 
@@ -604,6 +668,9 @@ $(function () {
 
         });
         $.enableDrag();
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     });
 });
 
@@ -735,7 +802,7 @@ $(function () {
 
 // Draggable div in middle
 $(function () {
-    var height = $(window).height();
+    var height = $(window).height() - ($("#draggableMiddleDiv").height() + 20);
     $("#draggableMiddleDiv").draggable({
         containment: [8, 50, 8, height],
         drag: function () {
@@ -761,6 +828,7 @@ $(function () {
 
             var poolDiv = topPos;
             var deckDiv = divHeight - topPos;
+            deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
 
             $('.pileDeckDivs').css('padding-top', '50px');
             $('#poolDiv').height(poolDiv);
@@ -771,6 +839,28 @@ $(function () {
 
 });
 
+$(function () {
+    // Calculate div height, depending how many cards are there
+    $.calculateDivHeight = function () {
+        var maxlength = 0;
+        $('.pileDeckDivs > .deckStack').each(function () {
+            if (maxlength == 0) {
+                maxlength = $(this).find('li').length;
+            }
+
+            else {
+                if ($(this).find('li').length > maxlength) {
+                    maxlength = $(this).find('li').length;
+                }
+            }
+        });
+
+        var deckDivsWidth = 250 + (maxlength * 25);
+        $('.pileDeckDivs > .deckStack').each(function () {
+            $(this).css('height', deckDivsWidth + 'px');
+        });
+    };
+});
 
 // Draggable-funktion för korten
 $(function () {
@@ -807,6 +897,11 @@ $(function () {
                     });
 
                     $(".ui-selected").removeClass("ui-selected");
+
+                    // Calculate div height, depending how many cards are there
+                    $.calculateDivHeight();
+
+
 
                 },
                 start: function () {
@@ -908,7 +1003,6 @@ $(function () {
         var landCount = $('.deckStack > li[type=Land]').length + $('.deckStack > li[type=BasicLand]').length;
         var totalCountInPool = $('.poolStack > li').length;
 
-
         $(".card").each(function () {
             $(this).removeClass("last");
         });
@@ -922,6 +1016,9 @@ $(function () {
         $('#totalCreaturesInDeck').html(creatureCount);
         $('#totalLandsInDeck').html(landCount);
         $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     });
 
     // Send a card back to POOL
@@ -945,6 +1042,9 @@ $(function () {
         $('#totalCreaturesInDeck').html(creatureCount);
         $('#totalLandsInDeck').html(landCount);
         $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
+
+        // Calculate div height, depending how many cards are there
+        $.calculateDivHeight();
     })
 
 });
@@ -983,74 +1083,3 @@ function getConvertedManaCost(color) {
 
     return cmc;
 }
-
-/*
-$(document).ready(function () {
-
-    Highcharts.setOptions({
-        colors: ['#fffae5', '#83a2fb', '#363638', '#e93737', '#6bcb49']
-    });
-
-    RenderPieChart('container', [
-              ['White', 45.0],
-              ['Blue', 26.8],
-              ['Black', 12.8],
-              ['Red', 8.5],
-              ['Green', 6.2]
-    ]);
-
-    $('#btnPieChart').live('click', function () {
-        var data = [
-                     ['Firefox', 42.0],
-                     ['IE', 26.8],
-                     {
-                         name: 'Chrome',
-                         y: 14.8,
-                         sliced: true,
-                         selected: true
-                     },
-                     ['Safari', 6.5],
-                     ['Opera', 8.2],
-        ];
-
-        RenderPieChart('container', data);
-    });
-
-    function RenderPieChart(elementId, dataList) {
-        new Highcharts.Chart({
-            chart: {
-                renderTo: elementId,
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            }, title: {
-                text: 'Browser market shares at a specific website, 2010'
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.point.name + '</b>: ' + this.percentage + ' %';
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function () {
-                            return '<b>' + this.point.name + '</b>: ' + this.percentage + ' %';
-                        }
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: dataList
-            }]
-        });
-    };
-});
-*/

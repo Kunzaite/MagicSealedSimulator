@@ -28,7 +28,7 @@
 
 .ui-resizable-handle 
 {
-    background: #f5dc58;
+    background: #aaa9a3;
     border: 1px solid #FFF;
     width: 9px;
     height: 9px;
@@ -82,9 +82,18 @@ margin-top: 20px;
 	background-image: url("Images/greenBackground.jpg");
 }
 
-#deckDiv div 
+#deckDiv .pileDeckDivs
 {
     float:left;
+}
+
+#deckDiv .pileDeckSpellsDivs
+{
+    float:left;
+}
+#deckDiv .deckDivHorizontal
+{
+    clear:left;
 }
 
 #dragDropContainer ul{	/* General rules for all <ul> */
@@ -129,8 +138,6 @@ div#mainContainer{	/* Right column DIV */
     /**float:left;*/
 	margin-top:0px;
     margin-right:5px;
-	border-left:2px solid #000000;
-
 }
 
 span.tab {
