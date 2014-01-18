@@ -98,6 +98,7 @@ $(document).ready(function () {
             $('#deckDiv').height(deckDiv);
         });
 
+        // the last card in the stack gets this so they can be "more" draggable than others
         $(".card:last-child").each(function () {
             $(this).addClass("last");
         });
