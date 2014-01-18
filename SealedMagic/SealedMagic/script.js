@@ -26,7 +26,7 @@ $(document).ready(function () {
     }
     console.log(getQueryString());
 
-    $.getJSON("http://flamingfox.se/magiccarddb/boosters.php", { sets: getQueryString().sets, verbose: true }, function (result) {
+    $.getJSON("http://sämst.se/magiccarddb/boosters.php", { sets: getQueryString().sets, verbose: true }, function (result) {
         console.log("från json: " + result.data);
 
         $.each(result.boosters, function (index, booster) {
