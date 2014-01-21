@@ -96,6 +96,8 @@ $(document).ready(function () {
             $('.pileDeckDivs').css('padding-top', '50px');
             $('#poolDiv').height(poolDiv);
             $('#deckDiv').height(deckDiv);
+
+            $.calculateUlPoolHeight();
         });
 
         // the last card in the stack gets this so they can be "more" draggable than others
@@ -548,7 +550,7 @@ $(function () {
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     });
 });
 
@@ -582,7 +584,7 @@ $(function () {
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     });
 });
 
@@ -623,7 +625,7 @@ $(function () {
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     });
 });
 
@@ -671,7 +673,7 @@ $(function () {
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     });
 });
 
@@ -841,8 +843,8 @@ $(function () {
 });
 
 $(function () {
-    // Calculate div height, depending how many cards are there
-    $.calculateDivHeight = function () {
+    // Calculate ul height, depending how many cards are there
+    $.calculateUlHeight = function () {
         var maxlength = 0;
         $('.pileDeckDivs > .deckStack').each(function () {
             if (maxlength == 0) {
@@ -858,6 +860,29 @@ $(function () {
 
         var deckDivsWidth = 250 + (maxlength * 25);
         $('.pileDeckDivs > .deckStack').each(function () {
+            $(this).css('height', deckDivsWidth + 'px');
+        });
+    };
+});
+
+$(function () {
+    // Calculate ul height, depending how many cards are there
+    $.calculateUlPoolHeight = function () {
+        var maxlength = 0;
+        $('.poolStack').each(function () {
+            if (maxlength == 0) {
+                maxlength = $(this).find('li').length;
+            }
+
+            else {
+                if ($(this).find('li').length > maxlength) {
+                    maxlength = $(this).find('li').length;
+                }
+            }
+        });
+
+        var deckDivsWidth = 250 + (maxlength * 25);
+        $('.poolStack').each(function () {
             $(this).css('height', deckDivsWidth + 'px');
         });
     };
@@ -900,7 +925,7 @@ $(function () {
                     $(".ui-selected").removeClass("ui-selected");
 
                     // Calculate div height, depending how many cards are there
-                    $.calculateDivHeight();
+                    $.calculateUlHeight();
 
 
 
@@ -1019,7 +1044,7 @@ $(function () {
         $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     });
 
     // Send a card back to POOL
@@ -1045,7 +1070,7 @@ $(function () {
         $('#totalOtherInDeck').html(totalCount - creatureCount - landCount);
 
         // Calculate div height, depending how many cards are there
-        $.calculateDivHeight();
+        $.calculateUlHeight();
     })
 
 });
