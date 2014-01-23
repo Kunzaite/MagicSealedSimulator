@@ -1,4 +1,5 @@
-﻿body{
+﻿body
+{
 	font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;	/* Font to use */
 	background-color:#E2EBED;
 }
@@ -36,7 +37,8 @@
     z-index:0 !important;
 }
     
-.css-title:before {
+.css-title:before 
+{
     content: "Sort by";
     display: block;
     position: absolute;
@@ -51,7 +53,8 @@
     font-weight: bold;
 }
 
-.css-title :first-child {
+.css-title :first-child 
+{
 margin-top: 20px;
 }
 
@@ -82,43 +85,38 @@ margin-top: 20px;
 	background-image: url("Images/greenBackground.jpg");
 }
 
-#deckDiv .pileDeckDivs
-{
-    float:left;
-}
-
-#deckDiv .pileDeckSpellsDivs
-{
-    float:left;
-}
 #deckDiv .deckDivHorizontal
 {
     clear:left;
 }
 
-#dragDropContainer ul{	/* General rules for all <ul> */
+#dragDropContainer ul
+{	/* General rules for all <ul> */
 	margin-top:0px;
 	margin-left:0px;
 	margin-bottom:0px;
 	padding:2px;
 }
 
-#dragDropContainer li,#dragContent li,li#indicateDestination{	/* Movable items, i.e. <LI> */
+#dragDropContainer li,#dragContent li,li#indicateDestination
+{	/* Movable items, i.e. <LI> */
 	list-style-type:none;
-	height:25px;
+
     visibility:hidden;
 	background-color:#000000;
 	cursor:pointer;
-    width:186px;
+    width:100%;
 }
 
-li#indicateDestination{	/* Box indicating where content will be dropped - i.e. the one you use if you don't use arrow */
+li#indicateDestination
+{	/* Box indicating where content will be dropped - i.e. the one you use if you don't use arrow */
 	background-color:#FFF;
 }
 
 /* Start main container CSS */
 
-div#mainContainer{	/* Right column DIV */
+div#mainContainer
+{	/* Right column DIV */
     /**float:left;*/
     width:100%;
     height:100%;
@@ -126,27 +124,42 @@ div#mainContainer{	/* Right column DIV */
 
 }
 
-.foil {
+.foil 
+{
     border: 3px solid silver;
 }
 
-.pileDeckDivs {
+.pileDeckDivs 
+{
+    float:left;
     padding-top:50px;
+    width:11%;
+    padding:0.5%;
 }
 
-#mainContainer div:not(#deckMenuDiv) {	/* Parent <div> of small boxes */
+.pileDeckSpellsDivs 
+{
+    float:left;
+    width:11%;
+    padding:0.5%;
+}
+
+#mainContainer div:not(#deckMenuDiv) 
+{	/* Parent <div> of small boxes */
     /**float:left;*/
 	margin-top:0px;
     margin-right:5px;
 }
 
-span.tab {
+span.tab 
+{
 padding: 0 50px; 
 }
 
-#mainContainer ul{	/* Small box in right column ,i.e <ul> */
-	width:190px;
-	height:80px;
+#mainContainer ul
+{	/* Small box in right column ,i.e <ul> */
+	width:100%;
+	height:100%;
 	border:0px;
 	margin-bottom:0px;
     text-align:center;
@@ -156,7 +169,8 @@ padding: 0 50px;
 
 }
 
-#dragContent{	/* Drag container */
+#dragContent
+{	/* Drag container */
 	position:absolute;
 	width:150px;
 	height:20px;
@@ -166,7 +180,8 @@ padding: 0 50px;
 	z-index:2000;
 }
 
-#dragDropIndicator{	/* DIV for the small arrow */
+#dragDropIndicator
+{	/* DIV for the small arrow */
 	position:absolute;
 	width:7px;
 	height:10px;
@@ -176,57 +191,86 @@ padding: 0 50px;
 	padding:0px;
 }
 
-body{
+body
+{
 	background-color:#000;
     overflow:hidden;
 }
 
-#dragDropContainer{
+#dragDropContainer
+{
 	border:0px;
 	width:100%;
 }
 
-.toggleButtonImages {
+.toggleButtonImages 
+{
     height:30px;
 }
 
-.sortPoolButtonImages {
+.sortPoolButtonImages 
+{
     height:30px;
 }
 
-.sortDeckButtonImages {
+.sortDeckButtonImages 
+{
     height:30px;
 }
 
-.AddButtonImages {
+.AddButtonImages 
+{
     height:30px;
 }
 
-.cardDiv {
+.cardDiv 
+{
 	height:15px;
     position:relative;
 }
 
-.foilImages {
+.foilImages 
+{
+    width:40%;
     position: absolute;
     top: 5px; 
     left: 95px;
     visibility:visible;
 }
 
-.cardImages {
+.cardImages 
+{
     border: 6px solid black;
-    width: 175px;
+    width: 100%;
     visibility:visible;
 }
 
-.ui-selectable-helper {
+.ui-selectable-helper 
+{
     position: absolute; 
     z-index: 100; 
     border:1px dotted white;
 }
 
-li.ui-selected .cardImages {
+li.ui-selected .cardImages 
+{
     border: 6px solid white;
+}
+
+.cardDiv
+{
+    width:100%;
+}
+
+.pileDivs
+{
+    width:11%;
+    height:100%;
+    padding:0.5%;
+}
+
+.poolStack
+{
+    height:100% !important;
 }
 

@@ -47,7 +47,8 @@
                 <td>
                     <table style="border-collapse:separate; border-spacing:0px; border-color:black">
                         <tr>
-                            <td><img src="Images/Pool.jpg" id="poolImage" height="30" alt="submit" style="border: 2px solid black" /></td>  
+                            <td><img src="Images/Pool.jpg" id="poolImage" height="30" alt="submit" style="border: 2px solid black" /></td>
+                            <td><button style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="ExpandPoolButton" onclick="return false;"><img src="Images/PoolExpandButton.png" id="PoolExpandButton" height="30" alt="submit" title="Enlarge/minimize pool/deck" style="border: 2px solid black" /></button></td>  
                             <td><img src="Images/SortByImage.jpg" id="Img4" height="30" alt="submit" style="border: 2px solid black" /></td>
                             <td><button id="sortColorPoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" onclick="return false;"><img src="Images/ColorButton.png" id="poolColorButton" class="sortPoolButtonImages" alt="submit" /></button></td>
                             <td><button id="sortCostPoolButton" style="margin: 0px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" onclick="return false;"><img src="Images/CostButton.png" id="poolCostButton" class="sortPoolButtonImages" alt="submit" /></button></td>
@@ -75,7 +76,7 @@
                 <td><label style="color:white">Total:</label><label id="totalCardsInPoolArea" style="color:white"></label></td>
                 <td><span class="tab"></span></td>
                 <td><button style="margin: 0px; width:70px; height:32px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="restoreDeckButton" onclick="return false;"><img src="Images/RestoreButton.png" id="RestoreButton" height="30" class="RestoreButtonImages" alt="submit" title="Restore your pool" /></button></td>
-                <td><button style="margin: 0px; width:70px; height:32px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="newButton" onclick="return false;"><img src="Images/NewButton.png" id="NewButton" height="30" alt="submit" title="Create a new pool" /></button></td>
+                <td><button style="margin: 0px; width:70px; height:32px; padding: 0; vertical-align:middle; background-color: transparent; border: none;" id="newButton" onclick="return false;"><img src="Images/NewButton.png" id="Img1" height="30" alt="submit" title="Create a new pool" /></button></td>
             </tr>
         </table>
     </div>
@@ -83,34 +84,38 @@
 <div id="dragDropContainer">
 <div id="mainContainer">
     <div id="poolDiv">
-	    <div id="pile1div">
-            <ul id="poolPileW" class="poolStack" style="height: 700px; list-style-type:none">
+	    <div id="pile1div" class="pileDivs">
+            <ul id="poolPileW" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile2div">
-		    <ul id="poolPileU" class="poolStack" style=" list-style-type:none">
+	    <div id="pile2div" class="pileDivs">
+		    <ul id="poolPileU" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile3div">
-		    <ul id="poolPileB" class="poolStack" style=" list-style-type:none">
+	    <div id="pile3div" class="pileDivs">
+		    <ul id="poolPileB" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile4div">
+	    <div id="pile4div" class="pileDivs">
 		    <ul id="poolPileR" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile5div">
+	    <div id="pile5div" class="pileDivs">
 		    <ul id="poolPileG" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile6div">
+	    <div id="pile6div" class="pileDivs">
 		    <ul id="poolPileM" class="poolStack">
 		    </ul>
 	    </div>
-	    <div id="pile7div">
-		    <ul id="poolPileAL" class="poolStack">
+	    <div id="pile7div" class="pileDivs">
+		    <ul id="poolPileA" class="poolStack">
 		    </ul>
-	    </div>   
+	    </div>  
+	    <div id="pile8div" class="pileDivs">
+		    <ul id="poolPileL" class="poolStack">
+		    </ul>
+	    </div>           
     </div>
     <div style="background-color:white; width:100%" id="draggableMiddleDiv">
     <div id="deckMenuDiv" style="background-image:url('Images/blackBackground.jpg'); padding-top:0px; padding-bottom:0px; border: 2px solid black; width:100%">
@@ -175,7 +180,11 @@
 		        </ul>
 	        </div>
 	        <div id="pile7Deckdiv" class="pileDeckDivs">
-		        <ul id="deckPileAL" class="deckStack" style="list-style-type:none">
+		        <ul id="deckPileA" class="deckStack" style="list-style-type:none">
+		        </ul>
+	        </div>
+	        <div id="pile8Deckdiv" class="pileDeckDivs">
+		        <ul id="deckPileL" class="deckStack" style="list-style-type:none">
 		        </ul>
 	        </div>
         </div>
@@ -206,6 +215,10 @@
 	        </div>
 	        <div id="Div7" class="pileDeckSpellsDivs">
 		        <ul id="Ul7" class="deckStack" style="list-style-type:none">
+		        </ul>
+	        </div>
+	        <div id="Div8" class="pileDeckSpellsDivs">
+		        <ul id="Ul8" class="deckStack" style="list-style-type:none">
 		        </ul>
 	        </div>
         </div>

@@ -33,7 +33,7 @@ $(document).ready(function () {
             $.each(booster, function (index, card) {
                 var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace("-", "").replace("(", "").replace(")", "").toLowerCase();
                 console.log("name " + cardname);
-                var cardcolor = "";
+                var cardcolor = card.color;
                 var cardtype = "";
                 if (card.type.indexOf("Creature") != -1) {
                     cardtype = "Creature";
@@ -47,25 +47,21 @@ $(document).ready(function () {
                     cardtype = card.type;
                 }
 
-                if (card.color == "A" || card.color == "L") {
-                    cardcolor = "AL";
-                }
 
-                else {
-                    cardcolor = card.color;
-                }
+                var cardTopHeight = $(window).width() / 60;
 
                 if (!cardColorCardinality[cardcolor]) {
                     cardColorCardinality[cardcolor] = 1
-                } else {
+                }
+
+                else {
                     cardColorCardinality[cardcolor] += 1;
                 }
 
                 if (card.foiled == true) {
 
-
                     $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
                             .append($('<div></div>').addClass("cardDiv")
                                 .append($('<img src="Images/foil.png" />').addClass("foilImages"))
                                 .append($('<img src="' + encodeURI(card.image) + '" />').addClass("cardImages"))));
@@ -74,7 +70,7 @@ $(document).ready(function () {
 
                 else if (cardtype != "BasicLand") {
                     $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
                             .append($('<div></div>').addClass("cardDiv")
                                 .append($('<img src="' + encodeURI(card.image) + '" />').addClass("cardImages"))));
 
@@ -94,10 +90,10 @@ $(document).ready(function () {
             deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
 
             $('.pileDeckDivs').css('padding-top', '50px');
+
             $('#poolDiv').height(poolDiv);
             $('#deckDiv').height(deckDiv);
-
-            $.calculateUlPoolHeight();
+            $.sortPoolAlphabetically();
         });
 
         // the last card in the stack gets this so they can be "more" draggable than others
@@ -106,18 +102,21 @@ $(document).ready(function () {
         });
 
         $('#totalCardsInPoolArea').html($('.poolStack > li').length);
-        $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["M"] + "\nA/L: " + cardColorCardinality["AL"]);
+        $("#poolImage").attr("title", "W: " + cardColorCardinality["W"] + "\nU: " + cardColorCardinality["U"] + "\nB: " + cardColorCardinality["B"] + "\nR: " + cardColorCardinality["R"] + "\nG: " + cardColorCardinality["G"] + "\nM: " + cardColorCardinality["M"] + "\nA/L: " + cardColorCardinality["L"]);
         $("#WButton").attr("title", "White: " + cardColorCardinality["W"] + " cards.");
         $("#UButton").attr("title", "Blue: " + cardColorCardinality["U"] + " cards.");
         $("#BButton").attr("title", "Black: " + cardColorCardinality["B"] + " cards.");
         $("#RButton").attr("title", "Red: " + cardColorCardinality["R"] + " cards.");
         $("#GButton").attr("title", "Green: " + cardColorCardinality["G"] + " cards.");
         $("#MButton").attr("title", "Multicolor: " + cardColorCardinality["M"] + " cards.");
-        $("#AButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
-        $("#LButton").attr("title", "Colorless: " + cardColorCardinality["AL"] + " cards.");
+        $("#AButton").attr("title", "Artifact: " + cardColorCardinality["A"] + " cards.");
+        $("#LButton").attr("title", "Lands: " + cardColorCardinality["L"] + " cards.");
+
+
 
     });
 
+    // Right-click menu for Pool
     $(function () {
         $.contextMenu({
             selector: '#poolDiv',
@@ -134,6 +133,7 @@ $(document).ready(function () {
         });
     });
 
+    // Right-click menu for Deck
     $(function () {
         $.contextMenu({
             selector: '#deckDiv',
@@ -154,6 +154,8 @@ $(document).ready(function () {
         function () {
             $(this).hide();
         });
+
+
 
     $("#draggablePreviewImage").offset({ top: 200, left: 800 })
 
@@ -183,7 +185,8 @@ $(document).ready(function () {
     $('.resizable').resizable({
         aspectRatio: true,
         handles: 'sw',
-        maxWidth: 250,
+        maxWidth: 300,
+        minWidth: 50,
     });
 
     var size = ($(window).height() / 2) - 200;
@@ -197,6 +200,8 @@ $(document).ready(function () {
         $(this).css('height', size + 'px');
     });
 
+
+    $('#ExpandPoolButton > img').attr("toggled", "0");
     $('.toggleButtonImages').attr("toggled", "0");
     $('.sortPoolButtonImages').attr("clicked", "0");
     $("#poolColorButton").attr("clicked", "1");
@@ -214,6 +219,27 @@ $(document).ready(function () {
 
     }, function () {
         $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
+    });
+
+    // Hover over expandbutton
+    $("#PoolExpandButton").hover(function () {
+        if ($(this).attr("toggled") == 1) {
+            $(this).attr("src", "Images/ToggledHover" + $(this).attr("id") + ".png");
+        }
+
+        else {
+            $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
+        }
+
+    }, function () {
+        if ($(this).attr("toggled") == 1) {
+            $(this).attr("src", "Images/Toggled" + $(this).attr("id") + ".png");
+        }
+
+        else {
+            $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
+        }
+
     });
 
     $(".RestoreButtonImages").hover(function () {
@@ -284,43 +310,44 @@ $(document).ready(function () {
 
     $.addLandFunction = function () {
         $("#addLandDialog").dialog("close");
+        var cardTopHeight = $(window).width() / 60;
 
         // Add plains
         for (var i = 0; i < $('#addPlainsBox').val() ; i++) {
-            $("#deckPileAL")
-                .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg')).attr("name", "Plains (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "AL").attr("rarity", "C")
+            $("#deckPileL")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg')).attr("name", "Plains (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add island
         for (var i = 0; i < $('#addIslandBox').val() ; i++) {
-            $("#deckPileAL")
-                .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg')).attr("name", "Island (1)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "AL").attr("rarity", "C")
+            $("#deckPileL")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg')).attr("name", "Island (1)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add swamp
         for (var i = 0; i < $('#addSwampBox').val() ; i++) {
-            $("#deckPileAL")
-                .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg')).attr("name", "Swamp (3)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "AL").attr("rarity", "C")
+            $("#deckPileL")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg')).attr("name", "Swamp (3)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add mountain
         for (var i = 0; i < $('#addMountainBox').val() ; i++) {
-            $("#deckPileAL")
-                .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg')).attr("name", "Mountain (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "AL").attr("rarity", "C")
+            $("#deckPileL")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg')).attr("name", "Mountain (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add forest
         for (var i = 0; i < $('#addForestBox').val() ; i++) {
-            $("#deckPileAL")
-                .append($('<li></li>').addClass("card").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg')).attr("name", "Forest (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "AL").attr("rarity", "C")
+            $("#deckPileL")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg')).attr("name", "Forest (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg') + '" />').addClass("cardImages"))));
         }
@@ -495,6 +522,8 @@ $(function () {
             }
 
         });
+
+        $.sortPoolAlphabetically();
     });
 });
 
@@ -530,6 +559,35 @@ $(function () {
     });
 });
 
+$(function () {
+    $("#ExpandPoolButton").click(function () {
+        if ($($(this).children('img')).attr("toggled") == "0") {
+            $($(this).children('img')).attr("toggled", "1");
+            $($(this).children('img')).attr("src", "Images/Toggled" + $(this).children('img').attr("id") + ".png");
+            $("#draggableMiddleDiv").css({ top: $(window).height() - 113 });
+        }
+
+        else {
+            $($(this).children('img')).attr("toggled", "0");
+            $($(this).children('img')).attr("src", "Images/" + $(this).children('img').attr("id") + ".png");
+            $("#draggableMiddleDiv").css({ top: 0 });
+        }
+
+        var position = $("#draggableMiddleDiv").position();
+        var topPos = position.top;
+        var divHeight = $(window).height();
+
+        var poolDiv = topPos;
+        var deckDiv = divHeight - topPos;
+        deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
+
+        $('.pileDeckDivs').css('padding-top', '50px');
+
+        $('#poolDiv').height(poolDiv);
+        $('#deckDiv').height(deckDiv);
+    });
+});
+
 // SORT FUNCTIONS FOR Deck AREA ---------------------------------------------------------------------------------------
 // Sort by Color - DECK
 $(function () {
@@ -547,6 +605,7 @@ $(function () {
             $(this).appendTo($("#deckPile" + $(this).attr("color")));
 
         });
+        $.sortDeckAlphabetically();
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
@@ -569,10 +628,10 @@ $(function () {
             return parseInt($(a).attr("cmc")) < parseInt($(b).attr("cmc")) ? 1 : -1;
         });
 
-        var deckList = ["deckPileW", "deckPileU", "deckPileB", "deckPileR", "deckPileG", "deckPileM", "deckPileAL"];
+        var deckList = ["deckPileW", "deckPileU", "deckPileB", "deckPileR", "deckPileG", "deckPileM", "deckPileA", "deckPileL"];
         $(elems).each(function () {
-            if (parseInt($(this).attr("cmc")) == 0 || parseInt($(this).attr("cmc")) > 6) {
-                $(this).appendTo('#deckPileAL');
+            if (parseInt($(this).attr("cmc")) == 0 || parseInt($(this).attr("cmc")) > 7) {
+                $(this).appendTo('#deckPileL');
             }
 
             else {
@@ -581,6 +640,7 @@ $(function () {
 
 
         });
+        $.sortDeckAlphabetically();
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
@@ -622,6 +682,7 @@ $(function () {
                 }
             }
         });
+        $.sortDeckAlphabetically();
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
@@ -662,14 +723,15 @@ $(function () {
             }
 
             else if ($(this).attr("type") == "Land") {
-                $(this).appendTo('#deckPileM');
+                $(this).appendTo('#deckPileL');
             }
 
             else {
-                $(this).appendTo('#deckPileAL');
+                $(this).appendTo('#deckPileA');
             }
 
         });
+        $.sortDeckAlphabetically();
         $.enableDrag();
 
         // Calculate div height, depending how many cards are there
@@ -695,6 +757,7 @@ $(function () {
             $(this).appendTo('#poolPile' + $(this).attr("color"));
 
         });
+        $.sortPoolAlphabetically();
         $.enableDrag();
     });
 
@@ -712,10 +775,10 @@ $(function () {
             return parseInt($(a).attr("cmc")) < parseInt($(b).attr("cmc")) ? 1 : -1;
         });
 
-        var poolList = ["poolPileW", "poolPileU", "poolPileB", "poolPileR", "poolPileG", "poolPileM", "poolPileAL"];
+        var poolList = ["poolPileW", "poolPileU", "poolPileB", "poolPileR", "poolPileG", "poolPileM", "poolPileA", "poolPileL"];
         $(elems).each(function () {
-            if (parseInt($(this).attr("cmc")) == 0 || parseInt($(this).attr("cmc")) > 6) {
-                $(this).appendTo('#poolPileAL');
+            if (parseInt($(this).attr("cmc")) == 0 || parseInt($(this).attr("cmc")) > 7) {
+                $(this).appendTo('#poolPileL');
             }
 
             else {
@@ -723,7 +786,9 @@ $(function () {
             }
 
         });
+        $.sortPoolAlphabetically();
         $.enableDrag();
+
     });
 
     // Sort by Rarity - POOL
@@ -760,6 +825,7 @@ $(function () {
 
             }
         });
+        $.sortPoolAlphabetically();
         $.enableDrag();
     });
 
@@ -798,6 +864,7 @@ $(function () {
                 $(this).appendTo('#poolPileM');
             }
         });
+        $.sortPoolAlphabetically();
         $.enableDrag();
     });
 
@@ -819,7 +886,6 @@ $(function () {
             $('.pileDeckDivs').css('padding-top', '30px');
             $('#poolDiv').height(poolDiv);
             $('#deckDiv').height(deckDiv);
-
         },
 
         //containment: "#divAll"
@@ -836,6 +902,8 @@ $(function () {
             $('.pileDeckDivs').css('padding-top', '50px');
             $('#poolDiv').height(poolDiv);
             $('#deckDiv').height(deckDiv);
+            $('#ExpandPoolButton > img').attr("toggled", "0");
+            $('#ExpandPoolButton > img').attr("src", "Images/" + $('#ExpandPoolButton > img').attr("id") + ".png");
         }
 
     });
@@ -858,31 +926,10 @@ $(function () {
             }
         });
 
-        var deckDivsWidth = 250 + (maxlength * 25);
+        var cardHeight = $('.cardImages').first().height();
+        console.log("h" + cardHeight);
+        var deckDivsWidth = cardHeight + (maxlength * 25);
         $('.pileDeckDivs > .deckStack').each(function () {
-            $(this).css('height', deckDivsWidth + 'px');
-        });
-    };
-});
-
-$(function () {
-    // Calculate ul height, depending how many cards are there
-    $.calculateUlPoolHeight = function () {
-        var maxlength = 0;
-        $('.poolStack').each(function () {
-            if (maxlength == 0) {
-                maxlength = $(this).find('li').length;
-            }
-
-            else {
-                if ($(this).find('li').length > maxlength) {
-                    maxlength = $(this).find('li').length;
-                }
-            }
-        });
-
-        var deckDivsWidth = 250 + (maxlength * 25);
-        $('.poolStack').each(function () {
             $(this).css('height', deckDivsWidth + 'px');
         });
     };
@@ -938,10 +985,12 @@ $(function () {
 
                 scroll: false,
                 helper: function () {
+
                     var selected = $("li.ui-selected");
+                    var ul = $("<ul></ul>").addClass("mainContainer");
                     selected.addClass("helperList");
-                    var container = $('<div/>');
-                    selected.clone().appendTo(container);
+                    var container = $('<div/>').css('width', $("#pile1div").width() + 'px');
+                    selected.clone().appendTo(ul).appendTo(container);
                     return container;
                 },
                 appendTo: 'body'
@@ -1073,6 +1122,34 @@ $(function () {
         $.calculateUlHeight();
     })
 
+});
+
+// Sort all cards in the pool in alphabetic order
+$(function () {
+    $.sortPoolAlphabetically = function () {
+        $(".poolStack").each(function () {
+            var mylist = $(this);
+            var listitems = mylist.children('li').get();
+            listitems.sort(function (a, b) {
+                return $(a).attr("name").toUpperCase().localeCompare($(b).attr("name").toUpperCase());
+            })
+            $.each(listitems, function (idx, itm) { mylist.append(itm); });
+        });
+    }
+});
+
+// Sort all cards in the deck in alphabetic order
+$(function () {
+    $.sortDeckAlphabetically = function () {
+        $(".deckStack").each(function () {
+            var mylist = $(this);
+            var listitems = mylist.children('li').get();
+            listitems.sort(function (a, b) {
+                return $(a).attr("name").toUpperCase().localeCompare($(b).attr("name").toUpperCase());
+            })
+            $.each(listitems, function (idx, itm) { mylist.append(itm); });
+        });
+    }
 });
 
 
