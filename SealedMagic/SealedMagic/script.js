@@ -31,7 +31,7 @@ $(document).ready(function () {
 
         $.each(result.boosters, function (index, booster) {
             $.each(booster, function (index, card) {
-                var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace("-", "").replace("(", "").replace(")", "").toLowerCase();
+                var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace(/Æ/g, 'AE').replace("-", "").replace("(", "").replace(")", "").toLowerCase();
                 console.log("name " + cardname);
                 var cardcolor = card.color;
                 var cardtype = "";
@@ -61,18 +61,18 @@ $(document).ready(function () {
                 if (card.foiled == true) {
 
                     $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
                             .append($('<div></div>').addClass("cardDiv")
                                 .append($('<img src="Images/foil.png" />').addClass("foilImages"))
-                                .append($('<img src="' + encodeURI(card.image) + '" />').addClass("cardImages"))));
+                                .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
 
                 }
 
                 else if (cardtype != "BasicLand") {
                     $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image)).attr("name", card.name).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
                             .append($('<div></div>').addClass("cardDiv")
-                                .append($('<img src="' + encodeURI(card.image) + '" />').addClass("cardImages"))));
+                                .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
 
                 }
 

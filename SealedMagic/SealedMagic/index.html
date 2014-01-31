@@ -43,12 +43,12 @@
     margin-top: 20px;
 }
 
-    #selectable {   
-        width:600px;
-        height:700px;
-        background:#b6ff00;
-        overflow:auto;
-    }
+#selectable {   
+    width:600px;
+    height:700px;
+    background:#b6ff00;
+    overflow:auto;
+}
     #selectable div {
         background: #ffc;
         line-height: 25px;
@@ -194,7 +194,7 @@ label.custom-select {
                 $(this).attr("src", "Images/StartButton.jpg");
             });
 
-            $.getJSON("http://flamingfox.se/magiccarddb/sets.php", function (sets) {
+            $.getJSON("http://sämst.se/magiccarddb/sets.php", function (sets) {
                 var setList = [];
 
                 for (var i = 0; i < 6; i++) {
@@ -224,7 +224,12 @@ label.custom-select {
             });
 
             $("#therosButton").click(function () {
-                $(".boosterSelect").val("THS");
+                $("#options1").val("THS");
+                $("#options2").val("THS");
+                $("#options3").val("THS");
+                $("#options4").val("BNG");
+                $("#options5").val("BNG");
+                $("#options6").val("BNG");
             });
 
             $("#ravnicaButton").click(function () {
@@ -242,6 +247,19 @@ label.custom-select {
 
 
     </script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-47502049-1', 'xn--smst-loa.se');
+        ga('send', 'pageview');
+
+</script>
         
 </head>
 <body>
@@ -252,21 +270,17 @@ label.custom-select {
     <div style="text-align:center; padding:10px">
     <label>Choose set: </label>
         <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
-        <input type='button' value='Theros' class="setButtons" id='therosButton' />
+        <input type='button' value='Theros Block' class="setButtons" id='therosButton' />
         <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
     </div>
     <div id="bodyDiv">              
     </div>
-    <div style="background-color:white; text-align:center" >
+    <div style="background-color:white">
         <p class="info" style="padding-top:6px">
-            <input type='button' value='Start' class="setButtons" id='startButton' />
+            <input type="button" value="Start" class="setButtons" id="startButton">
         </p> 
     </div>
-    </div>
-    <div style="text-align:center; padding:10px">
-    <p>
-        Magic the Gathering is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated.
-    </p>
+
     </div>
 </body>
 </html>
