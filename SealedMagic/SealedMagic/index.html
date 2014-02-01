@@ -225,7 +225,12 @@ label.custom-select {
             });
 
             $("#therosButton").click(function () {
-                $(".boosterSelect").val("THS");
+                $("#options1").val("THS");
+                $("#options2").val("THS");
+                $("#options3").val("THS");
+                $("#options4").val("BNG");
+                $("#options5").val("BNG");
+                $("#options6").val("BNG");
             });
 
             $("#ravnicaButton").click(function () {
@@ -253,7 +258,7 @@ label.custom-select {
     <div style="text-align:center; padding:10px">
     <label>Choose set: </label>
         <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
-        <input type='button' value='Theros' class="setButtons" id='therosButton' />
+        <input type='button' value='Theros Block' class="setButtons" id='therosButton' />
         <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
     </div>
     <div id="bodyDiv">              
