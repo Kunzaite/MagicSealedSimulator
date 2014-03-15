@@ -24,77 +24,116 @@ $(document).ready(function () {
         }
         return ret;
     }
-    console.log(getQueryString());
+    console.log("qs", getQueryString());
 
-    $.getJSON("http://sämst.se/magiccarddb/boosters.php", { sets: getQueryString().sets, verbose: true }, function (result) {
-        console.log("från json: " + result.data);
+    var getqueries = getQueryString();
 
-        $.each(result.boosters, function (index, booster) {
-            $.each(booster, function (index, card) {
-                var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace(/Æ/g, 'AE').replace("-", "").replace("(", "").replace(")", "").toLowerCase();
-                console.log("name " + cardname);
-                var cardcolor = card.color;
-                var cardtype = "";
-                if (card.type.indexOf("Creature") != -1) {
-                    cardtype = "Creature";
-                }
+    if (getqueries.pool && !getqueries.deck) {
 
-                else if (card.type.indexOf("Basic") != -1) {
-                    cardtype = "BasicLand";
-                }
+        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.pool }, function (cards) {
+            $.each(cards, createCard);
+            graphicsFix();
+        });
 
-                else {
-                    cardtype = card.type;
-                }
+        
 
+    }
 
-                var cardTopHeight = $(window).width() / 60;
+    else if (getqueries.deck) {
+        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.pool, deckid: getqueries.deck }, function (cards) {
+            $.each(cards, createCard);
+            graphicsFix();
+        });
 
-                if (!cardColorCardinality[cardcolor]) {
-                    cardColorCardinality[cardcolor] = 1
-                }
+        
+    }
 
-                else {
-                    cardColorCardinality[cardcolor] += 1;
-                }
+    else {
+        $.getJSON("http://sämst.se/magiccarddb/boosters.php", { sets: getQueryString().sets, verbose: true }, function (result) {
 
-                if (card.foiled == true) {
-
-                    $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
-                            .append($('<div></div>').addClass("cardDiv")
-                                .append($('<img src="Images/foil.png" />').addClass("foilImages"))
-                                .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
-
-                }
-
-                else if (cardtype != "BasicLand") {
-                    $("#poolPile" + cardcolor)
-                        .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
-                            .append($('<div></div>').addClass("cardDiv")
-                                .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
-
-                }
+            $.each(result.boosters, function (index, booster) {
+                $.each(booster, createCard);
 
             });
 
-            $.enableDrag();
-            //$.enableSelect();
+            graphicsFix();
 
-            var position = $("#draggableMiddleDiv").position();
-            var topPos = position.top;
-            var divHeight = $(window).height();
 
-            var poolDiv = topPos;
-            var deckDiv = divHeight - topPos;
-            deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
-
-            $('.pileDeckDivs').css('padding-top', '50px');
-
-            $('#poolDiv').height(poolDiv);
-            $('#deckDiv').height(deckDiv);
-            $.sortPoolAlphabetically();
         });
+    }
+
+
+
+    function createCard (index, card) {
+        var cardname = card.name.replace(/\s+/g, "").replace("'", "").replace(",", "").replace(/Æ/g, 'AE').replace("-", "").replace("(", "").replace(")", "").toLowerCase();
+        var cardcolor = card.color;
+        var cardtype = "";
+        if (card.type.indexOf("Creature") != -1) {
+            cardtype = "Creature";
+        }
+
+        else if (card.type.indexOf("Basic") != -1) {
+            cardtype = "BasicLand";
+        }
+
+        else {
+            cardtype = card.type;
+        }
+
+
+        var cardTopHeight = $(window).width() / 60;
+
+        if (!cardColorCardinality[cardcolor]) {
+            cardColorCardinality[cardcolor] = 1
+        }
+
+        else {
+            cardColorCardinality[cardcolor] += 1;
+        }
+
+        var area = "#poolPile";
+        if (card.selected == true) {
+            area = "#deckPile";
+        }
+
+        if (card.foiled == true) {
+
+            $(area + cardcolor)
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", card.id).attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                    .append($('<div></div>').addClass("cardDiv")
+                        .append($('<img src="Images/foil.png" />').addClass("foilImages"))
+                        .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
+
+        }
+
+        else if (cardtype != "BasicLand") {
+            $(area + cardcolor)
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", card.id).attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI(card.image.replace(/Æ/g, 'AE'))).attr("name", card.name.replace(/Æ/g, 'AE')).attr("type", cardtype).attr("cmc", getConvertedManaCost(card.manacost)).attr("color", cardcolor).attr("rarity", card.rarity).attr("manacost", card.manacost)
+                    .append($('<div></div>').addClass("cardDiv")
+                        .append($('<img src="' + encodeURI(card.image.replace(/Æ/g, 'AE')) + '" />').addClass("cardImages"))));
+
+        }
+
+        
+    };
+
+    function graphicsFix()
+    {
+        $.enableDrag();
+        var position = $("#draggableMiddleDiv").position();
+        var topPos = position.top;
+        var divHeight = $(window).height();
+
+        var poolDiv = topPos;
+        var deckDiv = divHeight - topPos;
+        deckDiv = deckDiv - ($("#draggableMiddleDiv").height() + 20);
+
+        $('.pileDeckDivs').css('padding-top', '50px');
+
+        $('#poolDiv').height(poolDiv);
+        $('#deckDiv').height(deckDiv);
+        $.sortPoolAlphabetically();
+
 
         // the last card in the stack gets this so they can be "more" draggable than others
         $(".card:last-child").each(function () {
@@ -111,10 +150,7 @@ $(document).ready(function () {
         $("#MButton").attr("title", "Multicolor: " + cardColorCardinality["M"] + " cards.");
         $("#AButton").attr("title", "Artifact: " + cardColorCardinality["A"] + " cards.");
         $("#LButton").attr("title", "Lands: " + cardColorCardinality["L"] + " cards.");
-
-
-
-    });
+    }
 
     // Right-click menu for Pool
     $(function () {
@@ -308,6 +344,35 @@ $(document).ready(function () {
         $('#addLandDialog').dialog('open');
     });
 
+    $('#saveButton').click(function () {
+
+        var poolElems = $("#poolDiv").find('ul').children('li');
+
+        var poolArray = [];
+
+        $(poolElems).each(function () {
+            //console.log("pool: " + $(this).attr("cardid") + "\n");
+            poolArray.push($(this).attr("cardid"));
+        });
+
+        var deckElems = $("#deckDiv").find('ul').children('li');
+
+        var deckArray = [];
+
+        $(deckElems).each(function () {
+            //console.log("deck: " + $(this).attr("cardid") + "\n");
+            deckArray.push($(this).attr("cardid"));
+        });
+
+        console.log("HAHA");
+        $.getJSON("http://sämst.se/magiccarddb/decksaver.php", { pool: poolArray, deck: deckArray }).done(
+            function (result) {
+                console.log("pool" + result.poolId + ", deck: " + result.deckId);
+            });
+
+
+    });
+
     $.addLandFunction = function () {
         $("#addLandDialog").dialog("close");
         var cardTopHeight = $(window).width() / 60;
@@ -315,7 +380,7 @@ $(document).ready(function () {
         // Add plains
         for (var i = 0; i < $('#addPlainsBox').val() ; i++) {
             $("#deckPileL")
-                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg')).attr("name", "Plains (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", "373582").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg')).attr("name", "Plains (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
                         .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Plains2.full.jpg') + '" />').addClass("cardImages"))));
         }
@@ -323,33 +388,33 @@ $(document).ready(function () {
         // Add island
         for (var i = 0; i < $('#addIslandBox').val() ; i++) {
             $("#deckPileL")
-                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg')).attr("name", "Island (1)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", "373723").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg')).attr("name", "Island (1)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
-                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island1.full.jpg') + '" />').addClass("cardImages"))));
+                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Island4.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add swamp
         for (var i = 0; i < $('#addSwampBox').val() ; i++) {
             $("#deckPileL")
-                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg')).attr("name", "Swamp (3)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", "373608").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg')).attr("name", "Swamp (3)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
-                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp3.full.jpg') + '" />').addClass("cardImages"))));
+                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Swamp1.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add mountain
         for (var i = 0; i < $('#addMountainBox').val() ; i++) {
             $("#deckPileL")
-                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg')).attr("name", "Mountain (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", "373609").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg')).attr("name", "Mountain (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
-                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain2.full.jpg') + '" />').addClass("cardImages"))));
+                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Mountain4.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         // Add forest
         for (var i = 0; i < $('#addForestBox').val() ; i++) {
             $("#deckPileL")
-                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg')).attr("name", "Forest (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
+                .append($('<li></li>').addClass("card").css('height', cardTopHeight + 'px').attr("cardid", "373615").attr("onmouseover", "javascript:return preview(this);").attr("file", encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg')).attr("name", "Forest (2)").attr("type", "BasicLand").attr("cmc", "0").attr("color", "L").attr("rarity", "C")
                     .append($('<div></div>').addClass("cardDiv")
-                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest2.full.jpg') + '" />').addClass("cardImages"))));
+                        .append($('<img src="' + encodeURI('http://flamingfox.se/magiccarddb/cardimages/THS/Forest3.full.jpg') + '" />').addClass("cardImages"))));
         }
 
         $('#totalCardsInDeck').html($('.deckStack > li').length);
@@ -361,7 +426,6 @@ $(document).ready(function () {
         var elems = $('.deckStack > li');
         var numberOfEachColorList = [0, 0, 0, 0, 0];
         var numberOfEachLandList = [];
-        console.log("number of elem" + elems.length);
         var totalNumberOfSymbols = 0;
         $(elems).each(function () {
 
@@ -402,7 +466,6 @@ $(document).ready(function () {
         var numberOfLands = 40 - totalNonLandCards;
 
         for (var i = 0; i < numberOfEachColorList.length; i++) {
-            console.log(i + ": " + numberOfEachColorList[i]);
             numberOfEachLandList[i] = parseInt(Math.round(parseFloat(numberOfEachColorList[i] / totalNumberOfSymbols * numberOfLands))) || 0;
         }
 
@@ -927,7 +990,6 @@ $(function () {
         });
 
         var cardHeight = $('.cardImages').first().height();
-        console.log("h" + cardHeight);
         var deckDivsWidth = cardHeight + (maxlength * 25);
         $('.pileDeckDivs > .deckStack').each(function () {
             $(this).css('height', deckDivsWidth + 'px');
