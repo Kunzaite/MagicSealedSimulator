@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <style type="text/css">
 
 	.boosterSelect{
@@ -121,7 +122,7 @@ label.custom-select {
         font-size: 60%;
         line-height: 30px;
         padding: 0 7px;
-        background: #4197ee;
+        background: #40a35c;
         color: white;
         
         pointer-events:none;
@@ -134,51 +135,6 @@ label.custom-select {
     .no-pointer-events .custom-select:after {
         content: none;
     }
-
-
-    .setButtons {
-	    -moz-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	    -webkit-box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	    box-shadow:inset 0px 1px 0px 0px #cae3fc;
-	    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #79bbff), color-stop(1, #4197ee) );
-	    background:-moz-linear-gradient( center top, #79bbff 5%, #4197ee 100% );
-	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#79bbff', endColorstr='#4197ee');
-	    background-color:#79bbff;
-	    -webkit-border-top-left-radius:20px;
-	    -moz-border-radius-topleft:20px;
-	    border-top-left-radius:20px;
-	    -webkit-border-top-right-radius:20px;
-	    -moz-border-radius-topright:20px;
-	    border-top-right-radius:20px;
-	    -webkit-border-bottom-right-radius:20px;
-	    -moz-border-radius-bottomright:20px;
-	    border-bottom-right-radius:20px;
-	    -webkit-border-bottom-left-radius:20px;
-	    -moz-border-radius-bottomleft:20px;
-	    border-bottom-left-radius:20px;
-	    text-indent:0;
-	    border:1px solid #469df5;
-	    display:inline-block;
-	    color:#000000;
-	    font-family:Arial;
-	    font-size:15px;
-	    font-style:normal;
-	    height:50px;
-	    line-height:50px;
-	    width:100px;
-	    text-decoration:none;
-	    text-align:center;
-	    text-shadow:1px 1px 0px #287ace;
-    }
-    .setButtons:hover {
-	    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #4197ee), color-stop(1, #79bbff) );
-	    background:-moz-linear-gradient( center top, #4197ee 5%, #79bbff 100% );
-	    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#4197ee', endColorstr='#79bbff');
-	    background-color:#4197ee;
-    }.setButtons:active {
-	    position:relative;
-	    top:1px;
-    }
     </style>
     <link rel="stylesheet" href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
@@ -186,6 +142,7 @@ label.custom-select {
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.js"></script>
     <script src="http://medialize.github.io/jQuery-contextMenu/src/jquery.ui.position.js"></script>
+    <script src="global.js"></script>
     <script type="text/javascript">
         'use strict;'
         $(document).ready(function () {
@@ -203,10 +160,11 @@ label.custom-select {
                     var x = $('<label class="custom-select"></label>');
                     var $select = $('<select class="boosterSelect" id=options' + (i + 1).toString() + '></select>');
                     $.each(sets, function (index, set) {
+                        console.log("ss" + set.name);
                         $select.append($("<option></option>").text(set.name).val(set.code));
                     })
 
-                    $('#bodyDiv').append(paragraph.append(x.append($select)));
+                    $('.content_right').append(paragraph.append(x.append($select)));
                 }
 
                 $('#startButton').click(function () {
@@ -248,65 +206,54 @@ label.custom-select {
 
 
     </script>
-    
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-
-        ga('create', 'UA-47502049-1', 'xn--smst-loa.se');
-        ga('send', 'pageview');
-
-    </script>
 </head>
-<body>
-</div>
-<div style="text-align:center; padding:10px">
-<p>
-    Magic the Gathering is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated.
-</p>
-</div>
+<body style="background:url('Images/greenBackground.jpg')">
 <div class="wrap">
-    <nav>
-      <ul>
-        <li>
-            <a href="/">Home</a>
-        </li>
-        <li>
-            <a href="/print">Latest Pools</a>
-        </li>
-        <li>
-            <a href="/web">About Us</a>
-        </li>
-        <li>
-            <a href="/web">Other</a>
-        </li>
-        <li>
-            <a href="/web">Other</a>
-        </li>
-      </ul>
-    </nav>
-    <div style="clear:both">
-        <h1>About Us</h1>
-        <div style="background-image:url('Images/blackBackground.jpg'); height:100px" ID="logoDiv">
-            <img src="Images/SealedMagicLogo.jpg" title="A Magic Sealed Deck Simulator!" width="800px" style="position:absolute;  left:50%; margin-left:-400px"/>
+<img src="Images/logo.png" style="border-bottom:2px solid green" />
+        <nav style="margin-bottom:50px">
+          <ul>
+            <li>
+                <a href="/SealedMagic/index.html" id="menu_index">Randomize pool</a>
+            </li>
+            <li>
+                <a href="/SealedMagic/your.html">Your pool</a>
+            </li>
+            <li>
+                <a href="/web">Latest pools</a>
+            </li>
+            <li>
+                <a href="/SealedMagic/about.html" id="menu_about">About</a>
+            </li>
+            <li>
+                <a href="/web">Contact</a>
+            </li>
+          </ul>
+        </nav>
+    <div class="content">
+        <h1 class="heading">Randomize pool</h1>
+        <div class="content_left">
+            <div style="text-align:center; padding:10px">
+                <h2>Choose block: </h2>
+                <input type='button' value='Theros Block' class="setButtons" id='therosButton'/>
+                <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
+                <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
+            </div>
         </div>
-        <div style="text-align:center; padding:10px">
-        <label>Choose sets: </label>
-            <input type='button' value='Theros Block' class="setButtons" id='therosButton' />
-            <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
-            <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
-        </div>
-        <div id="bodyDiv">              
-        </div>
-        <div style="background-color:white; text-align:center" >
-            <p class="info" style="padding-top:6px">
-                <input type='button' value='Start' class="setButtons" id='startButton' />
-            </p> 
+        <div class="content_right">
+            <div style="text-align:center; padding:10px">
+                <h2>Or combine sets:</h2>
+            </div>
         </div>
     </div>
+    <div style="background-color:white; clear:both; text-align:center" >
+        <p class="info" style="padding-top:6px">
+            <input type='button' value='Start' class="setButtons" id='startButton' />
+        </p> 
+    </div>
+    <div style="clear:both; border-top:1px dotted #ccc;">
+    <p class="mini">Magic the Gathering is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated.</p>
+    </div>
+    </div>
+
 </body>
 </html>
