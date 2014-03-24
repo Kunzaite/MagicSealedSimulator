@@ -16,125 +16,71 @@
 		font-size:20px;
 	}
 
-	.info{
-		text-align:center;
-
-	}
-
 	#bodyDiv{
 		margin:auto;
         background-color:White;
 	}
-
-    .css-title:before {
-        content: "Sort by";
-        display: block;
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        background: #DDD;
-        padding: 2px;
-    
-        font-family: Verdana, Arial, Helvetica, sans-serif;
-        font-size: 11px;
-        font-weight: bold;
-    }
-
-    .css-title :first-child {
-    margin-top: 20px;
-}
-
-    #selectable {   
-        width:600px;
-        height:700px;
-        background:#b6ff00;
-        overflow:auto;
-    }
-    #selectable div {
-        background: #ffc;
-        line-height: 25px;
-        height: 25px;
-        width: 150px;
-        border: 1px solid #fcc;
-        }
-    #selectable div.ui-selected {
-        background: #fcaf3e;
-        }
-
-    #selectable div.ui-selected .mtgCard {
-        border: 3px solid red;
-        }
-
-    #selectable div.ui-selecting {
-        background: #8ae234;
-        }
-
-    /* dropdown */
-
-    p {
-    font-family: sans-serif;
-}
 
 label.custom-select {
     position: relative;
     display: inline-block;
 }
 
-    .custom-select select {
-        display: inline-block;
-        border: 2px solid #bbb;
-        padding: 4px 3px 3px 5px;
-        margin: 0;
-        font: inherit;
-        outline:none; /* remove focus ring from Webkit */
-        line-height: 1.2;
-        background: #f8f8f8;
+.custom-select select {
+    display: inline-block;
+    border: 2px solid #bbb;
+    padding: 4px 3px 3px 5px;
+    margin: 0;
+    font: inherit;
+    outline:none; /* remove focus ring from Webkit */
+    line-height: 1.2;
+    background: #f8f8f8;
         
-        -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
+    -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
         
-        -webkit-border-radius: 6px;
-        -moz-border-radius: 6px;
-        border-radius: 6px;
-    }
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
 
-    /* for Webkit's CSS-only solution */
-    @media screen and (-webkit-min-device-pixel-ratio:0) { 
-        .custom-select select {
-            padding-right:30px;    
-        }
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    .custom-select select {
+        padding-right:30px;    
     }
+}
     
-    /* Since we removed the default focus styles, we have to add our own */
-    .custom-select select:focus {
-        -webkit-box-shadow: 0 0 3px 1px #c00;
-        -moz-box-shadow: 0 0 3px 1px #c00;
-        box-shadow: 0 0 3px 1px #c00;
-    }
+/* Since we removed the default focus styles, we have to add our own */
+.custom-select select:focus {
+    -webkit-box-shadow: 0 0 3px 1px #c00;
+    -moz-box-shadow: 0 0 3px 1px #c00;
+    box-shadow: 0 0 3px 1px #c00;
+}
     
-    /* Select arrow styling */
-    .custom-select:after {
-        content: "▼";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        font-size: 60%;
-        line-height: 30px;
-        padding: 0 7px;
-        background: #40a35c;
-        color: white;
+/* Select arrow styling */
+.custom-select:after {
+    content: "▼";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    padding: 0 7px;
+    background: #40a35c;
+    color: white;
         
-        pointer-events:none;
+    pointer-events:none;
         
-        -webkit-border-radius: 0 6px 6px 0;
-        -moz-border-radius: 0 6px 6px 0;
-        border-radius: 0 6px 6px 0;
-    }
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+}
     
-    .no-pointer-events .custom-select:after {
-        content: none;
-    }
+.no-pointer-events .custom-select:after {
+    content: none;
+}
+
     </style>
     <link rel="stylesheet" href="http://medialize.github.io/jQuery-contextMenu/src/jquery.contextMenu.css" />
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
@@ -152,6 +98,24 @@ label.custom-select {
                 $(this).attr("src", "Images/StartButton.jpg");
             });
 
+            // default options
+            var deffunction = function () {
+                $(".THSButton").addClass('ButtonClicked');
+                $("#options1").val("THS");
+                $("#options2").val("THS");
+                $("#options3").val("THS");
+                $("#options4").val("BNG");
+                $("#options5").val("BNG");
+                $("#options6").val("BNG");
+            };
+            
+            $('.SetButton').on('click', function () {
+                $(".SetButton").each(function () {
+                    $(this).removeClass('ButtonClicked');
+                });
+                $(this).addClass('ButtonClicked');
+            });
+
             $.getJSON("http://xn--smst-loa.se/magiccarddb/sets.php", function (sets) {
                 var setList = [];
 
@@ -160,23 +124,23 @@ label.custom-select {
                     var x = $('<label class="custom-select"></label>');
                     var $select = $('<select class="boosterSelect" id=options' + (i + 1).toString() + '></select>');
                     $.each(sets, function (index, set) {
-                        console.log("ss" + set.name);
+
                         $select.append($("<option></option>").text(set.name).val(set.code));
                     })
 
-                    $('.content_right').append(paragraph.append(x.append($select)));
+                    $('.content_right div').append(paragraph.append(x.append($select)));
                 }
 
-                $('#startButton').click(function () {
-                    var boosterList = [];
-                    $('#bodyDiv').find('.boosterSelect').each(function (index, booster) {
-                        console.log($(booster).val());
-                        boosterList.push($(booster).val());
-                    });
-                    document.location.href = 'magicSealedSite.html' + '?' + $.param({ sets: boosterList })
-                });
+                deffunction();
             });
 
+            $('#startButton').click(function () {
+                var boosterList = [];
+                $('.content_right').find('.boosterSelect').each(function (index, booster) {
+                    boosterList.push($(booster).val());
+                });
+                document.location.href = 'magicSealedSite.html' + '?' + $.param({ sets: boosterList })
+            });
 
             $("#m14Button").click(function () {
                 $(".boosterSelect").val("M14");
@@ -200,6 +164,8 @@ label.custom-select {
                 $("#options6").val("DGM");
             });
 
+            
+
         });
 
 
@@ -216,10 +182,10 @@ label.custom-select {
                 <a href="/SealedMagic/index.html" id="menu_index">Randomize pool</a>
             </li>
             <li>
-                <a href="/SealedMagic/your.html">Your pool</a>
+                <a href="/SealedMagic/your.html" id="menu_your">Your pool</a>
             </li>
             <li>
-                <a href="/web">Latest pools</a>
+                <a href="/SealedMagic/latest.html" id="menu_latest">Latest pools</a>
             </li>
             <li>
                 <a href="/SealedMagic/about.html" id="menu_about">About</a>
@@ -231,12 +197,17 @@ label.custom-select {
         </nav>
     <div class="content">
         <h1 class="heading">Randomize pool</h1>
+        <p>
+        Here's where you can generate a Magic sealed pool. Once you've started the generator, you can save your pool and/or deck. Enjoy!
+        </p>
         <div class="content_left">
             <div style="text-align:center; padding:10px">
                 <h2>Choose block: </h2>
-                <input type='button' value='Theros Block' class="setButtons" id='therosButton'/>
-                <input type='button' class="setButtons" value='Magic 2014' id='m14Button' />
-                <input type='button' value='RtR Block' class="setButtons" id='ravnicaButton' />
+                <ul>
+                    <li style="list-style-type: none; margin: 0 20px 20px 0"><input type='button' value='Theros Block' class="SetButton THSButton" id='therosButton'/></li>
+                    <li style="list-style-type: none; margin: 0 20px 20px 0"><input type='button' value='Magic 2014' class="SetButton M14Button"  id='m14Button'/></li>
+                    <li style="list-style-type: none; margin: 0 20px 20px 0"><input type='button' value='RtR Block' class="SetButton RTRButton" id='ravnicaButton' /></li>
+                </ul>
             </div>
         </div>
         <div class="content_right">
@@ -247,11 +218,11 @@ label.custom-select {
     </div>
     <div style="background-color:white; clear:both; text-align:center" >
         <p class="info" style="padding-top:6px">
-            <input type='button' value='Start' class="setButtons" id='startButton' />
+            <input type='button' value='Start' class="SetButton" id='startButton' />
         </p> 
     </div>
     <div style="clear:both; border-top:1px dotted #ccc;">
-    <p class="mini">Magic the Gathering is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site is unaffiliated.</p>
+    <p class="mini">Magic the Gathering is TM and copyright Wizards of the Coast, Inc, a subsidiary of Hasbro, Inc. All rights reserved. This site not affiliated with, endorsed, sponsored, or specifically approved by Wizards of the Coast LLC. Sealed Magic may use the trademarks and other intellectual property of Wizards of the Coast LLC, which is permitted under Wizards' Fan Site Policy.</p>
     </div>
     </div>
 
