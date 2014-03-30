@@ -3,7 +3,8 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="global.css" />
+    <link rel="shortcut icon" href="Images/icon.png" type="image/ico" />
     <title>Create your own pool</title>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
@@ -37,8 +38,9 @@
        <h1 class="heading">Your pool</h1>
         <p>Here's where you copy-paste (or write) your pool. We'll take you to the generator, where you can save your pool/deck and share the link with others! We only take care of standard cards at the moment.</p>
         <textarea id="yourPoolTextArea"></textarea>
+        <p id="errorMessage"></p>
         <p class="info" style="padding-top:6px; padding-bottom:6px">
-        <input type='button' value='Start' class="SetButton" id='startButton' />    
+        <input type='button' value='Start' class="SetButton" id='yourStartButton'/>    
         </p> 
 </div>
     <div style="clear:both; border-top:1px dotted #ccc;">

@@ -1,0 +1,458 @@
+﻿body
+{
+	font: 16px Arial, Helvetica, sans-serif;
+	background-color:#E2EBED;
+}
+
+.wrap {
+    max-width:970px;
+    background-color:white;
+    box-shadow: 0 0 4px #808080;
+    margin: 0 auto;
+}
+
+.content {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.content_left {
+    float:left;
+    width:50%;
+
+}
+
+.content_right {
+    float:left;
+    min-width:50%;
+
+}
+
+p {
+    margin-left: 20px;
+    margin-right: 20px;
+    line-height: 200%;
+}
+
+p.mini  {
+    font-size: 10px;
+    line-height:100% !important;
+}
+
+
+h1, h2, h3, h4, h5 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.heading {
+    margin-top:20px;
+}
+
+.right {
+float: right;
+}
+
+div.box.right {
+margin: 3px 0 3px 9px;
+}
+
+div.box {
+    padding: 20px 20px 10px;
+    clear: both;
+    width: 208px;
+    max-height: 230px;
+    overflow: hidden;
+    background-color: #d3ebf2;
+}
+
+/*TABLE */
+    
+.CSSTableGenerator {
+	margin:0px;padding:0px;
+	width:100%;
+	box-shadow: 10px 10px 5px #888888;
+	border:1px solid #000000;
+	
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+	
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+	
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+	
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}.CSSTableGenerator table{
+    border-collapse: collapse;
+        border-spacing: 0;
+	width:100%;
+	height:100%;
+	margin:0px;padding:0px;
+}.CSSTableGenerator tr:last-child td:last-child {
+	-moz-border-radius-bottomright:0px;
+	-webkit-border-bottom-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:first-child {
+	-moz-border-radius-topleft:0px;
+	-webkit-border-top-left-radius:0px;
+	border-top-left-radius:0px;
+}
+.CSSTableGenerator table tr:first-child td:last-child {
+	-moz-border-radius-topright:0px;
+	-webkit-border-top-right-radius:0px;
+	border-top-right-radius:0px;
+}.CSSTableGenerator tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:0px;
+	-webkit-border-bottom-left-radius:0px;
+	border-bottom-left-radius:0px;
+}.CSSTableGenerator tr:hover td{
+	
+}
+.CSSTableGenerator tr:nth-child(odd){ background-color:#def2cb; }
+.CSSTableGenerator tr:nth-child(even)    { background-color:#ffffff; }.CSSTableGenerator td{
+	vertical-align:middle;
+	
+	
+	border:1px solid #000000;
+	border-width:0px 1px 1px 0px;
+	text-align:left;
+	padding:7px;
+	font-size:16px;
+	font-family:Arial;
+	font-weight:normal;
+	color:#000000;
+}.CSSTableGenerator tr:last-child td{
+	border-width:0px 1px 0px 0px;
+}.CSSTableGenerator tr td:last-child{
+	border-width:0px 0px 1px 0px;
+}.CSSTableGenerator tr:last-child td:last-child{
+	border-width:0px 0px 0px 0px;
+}
+.CSSTableGenerator tr:first-child td{
+		background:-o-linear-gradient(bottom, #40a35c 5%, #51e278 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #40a35c), color-stop(1, #51e278) );
+	background:-moz-linear-gradient( center top, #40a35c 5%, #51e278 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#40a35c", endColorstr="#51e278");	background: -o-linear-gradient(top,#40a35c,51e278);
+
+	background-color:#40a35c;
+	border:0px solid #000000;
+	text-align:center;
+	border-width:0px 0px 1px 1px;
+	font-size:17px;
+	font-family:Arial;
+	font-weight:bold;
+	color:#ffffff;
+}
+.CSSTableGenerator tr:first-child:hover td{
+	background:-o-linear-gradient(bottom, #40a35c 5%, #51e278 100%);	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #40a35c), color-stop(1, #51e278) );
+	background:-moz-linear-gradient( center top, #40a35c 5%, #51e278 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#40a35c", endColorstr="#51e278");	background: -o-linear-gradient(top,#40a35c,51e278);
+
+	background-color:#40a35c;
+}
+.CSSTableGenerator tr:first-child td:first-child{
+	border-width:0px 0px 1px 0px;
+}
+.CSSTableGenerator tr:first-child td:last-child{
+	border-width:0px 0px 1px 1px;
+}
+    
+    
+ /*   TABLE*/
+
+/* Make the nav take up the whole body width, and give it some top and bottom margin space */
+nav {
+  width: 100%;
+}
+/* Make the list of links take up the whole width of the nav */
+nav ul {
+  width: 100%; 
+}
+
+nav ul li {
+  width: 20%;
+  float: left;
+
+}
+nav ul li a {
+  display: block;
+  width: 100%; 
+}
+
+nav ul {
+  width: 100%; /* from above */
+  list-style: none;
+  margin: 0;
+  padding: 0; 
+
+}
+
+#yourPoolTextArea {
+    width:60%; 
+    margin-left: auto;
+    margin-right: auto;    
+    display: block;
+    height: 400px; 
+    resize:none;
+}
+
+.info{
+    text-align:center;
+}
+
+nav ul li a {
+  text-align: center;
+  padding: 8px 0;
+  display: block;
+  width: 100%;
+  color:#313116 !important;
+  border:1px solid black;
+  background: #cdeb8e; /* Old browsers */
+  background: -moz-linear-gradient(top,
+    #cdeb8e 0%, #b0ca34 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, 
+    left top, left bottom, color-stop(0%,#cdeb8e),
+    color-stop(100%,#b0ca34)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  
+    #cdeb8e 0%,#b0ca34 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  
+    #cdeb8e 0%,#b0ca34 100%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom,  
+    #cdeb8e 0%,#b0ca34 100%); /* W3C standard, IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( 
+    startColorstr='#cdeb8e', 
+    endColorstr='#b0ca34',GradientType=0 ); /* IE6-9 */
+  }
+
+nav ul li a:hover {
+  color:white !important;
+  background: #b0ca34; /* Old browsers */
+  background: -moz-linear-gradient(top,  
+    #b0ca34 0%, #96c40d 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, 
+    color-stop(0%,#b0ca34), 
+    color-stop(100%,#96c40d)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  
+    #b0ca34 0%,#96c40d 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  
+    #b0ca34 0%,#96c40d 100%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom,  
+    #b0ca34 0%,#96c40d 100%); /* W3C standard, IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( 
+    startColorstr='#b0ca34', 
+    endColorstr='#96c40d',GradientType=0 ); /* IE6-9 */
+  }
+
+.chosen_menu {
+  color:white !important;
+  background: #40a35c; /* Old browsers */
+  background: -moz-linear-gradient(top,  
+    #40a35c 0%, #327e47 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, 
+    color-stop(0%,#327e47), 
+    color-stop(100%,#51a12a)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  
+    #40a35c 0%,#327e47 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  
+    #40a35c 0%,#327e47 100%); /* Opera 11.10+ */
+  background: linear-gradient(to bottom,  
+    #40a35c 0%,#327e47 100%); /* W3C standard, IE10+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( 
+    startColorstr='#40a35c', 
+    endColorstr='#327e47',GradientType=0 ); /* IE6-9 */
+}
+
+#startButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b8ee', endColorstr='#468ccf');
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid black;
+	display:inline-block;
+	color:white;
+	font-family:Arial;
+	font-size:15px !important;
+	font-weight:bold !important;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+    margin-left: 5px;
+	text-shadow:1px 1px 0px #7cacde;
+    background-color:#40a35c;
+
+}
+
+#startButton:hover {
+    background-color:#b0ca34;
+}
+
+.SetButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	box-shadow:inset 0px 1px 0px 0px #bee2f9;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#63b8ee', endColorstr='#468ccf');
+	-webkit-border-top-left-radius:0px;
+	-moz-border-radius-topleft:0px;
+	border-top-left-radius:0px;
+	-webkit-border-top-right-radius:0px;
+	-moz-border-radius-topright:0px;
+	border-top-right-radius:0px;
+	-webkit-border-bottom-right-radius:0px;
+	-moz-border-radius-bottomright:0px;
+	border-bottom-right-radius:0px;
+	-webkit-border-bottom-left-radius:0px;
+	-moz-border-radius-bottomleft:0px;
+	border-bottom-left-radius:0px;
+	text-indent:0;
+	border:1px solid black;
+	display:inline-block;
+	color:black;
+	font-family:Arial;
+	font-size:15px !important;
+	font-weight:bold !important;
+	font-style:normal;
+	height:40px;
+	line-height:40px;
+	width:165px;
+	text-align:right;
+    margin-left: 5px;
+	text-shadow:1px 1px 0px #7cacde;
+}
+
+a {
+   color: #004a70;
+text-decoration: none;
+font-weight: bold;
+}
+
+.THSButton {
+    background: url("Images/THSBNGSymbol.png") no-repeat left;
+	background-color:#cdeb8e;
+}
+
+.THSButton:hover {
+    background: url("Images/THSBNGSymbol.png") no-repeat left;
+	background-color:#b0ca34 !important;
+    color:white;
+}
+
+.ButtonClicked {
+    background-color:#40a35c !important; 
+    color:white;
+}
+
+.M14Button {
+    background: url("Images/M14Symbol.png") no-repeat left;
+    background-color:#cdeb8e;
+}
+
+.M14Button:hover {
+    background: url("Images/M14Symbol.png") no-repeat left;
+	background-color:#b0ca34 !important;
+    color:white;
+}
+
+.RTRButton {
+    background: url("Images/RTRGTCDGMSymbol.png") no-repeat left;
+    background-color:#cdeb8e;
+}
+
+.RTRButton:hover {
+    background: url("Images/RTRGTCDGMSymbol.png") no-repeat left;
+	background-color:#b0ca34 !important;
+    color:white;
+}
+
+	.boosterSelect{
+		font-size:16px;
+	}
+
+	.boosterLabel{
+		font-size:20px;
+	}
+
+	#bodyDiv{
+		margin:auto;
+        background-color:White;
+	}
+
+label.custom-select {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select select {
+    display: inline-block;
+    border: 2px solid #bbb;
+    padding: 4px 3px 3px 5px;
+    margin: 0;
+    font: inherit;
+    outline:none; /* remove focus ring from Webkit */
+    line-height: 1.2;
+    background: #f8f8f8;
+        
+    -webkit-appearance:none; /* remove the strong OSX influence from Webkit */
+        
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
+/* for Webkit's CSS-only solution */
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+    .custom-select select {
+        padding-right:30px;    
+    }
+}
+    
+/* Since we removed the default focus styles, we have to add our own */
+.custom-select select:focus {
+    -webkit-box-shadow: 0 0 3px 1px #c00;
+    -moz-box-shadow: 0 0 3px 1px #c00;
+    box-shadow: 0 0 3px 1px #c00;
+}
+    
+/* Select arrow styling */
+.custom-select:after {
+    content: "▼";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    padding: 0 7px;
+    background: #40a35c;
+    color: white;
+        
+    pointer-events:none;
+        
+    -webkit-border-radius: 0 6px 6px 0;
+    -moz-border-radius: 0 6px 6px 0;
+    border-radius: 0 6px 6px 0;
+}
+    
+.no-pointer-events .custom-select:after {
+    content: none;
+}

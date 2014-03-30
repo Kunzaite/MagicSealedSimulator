@@ -27,10 +27,11 @@ $(document).ready(function () {
     console.log("qs", getQueryString());
 
     var getqueries = getQueryString();
+    var poolSaved = 0;
 
-    if (getqueries.pool && !getqueries.deck) {
-
-        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.pool }, function (cards) {
+    if (getqueries.poolid && !getqueries.deckid) {
+        var poolSaved = 1;
+        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.poolid }, function (cards) {
             $.each(cards, createCard);
             graphicsFix();
         });
@@ -39,8 +40,9 @@ $(document).ready(function () {
 
     }
 
-    else if (getqueries.deck) {
-        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.pool, deckid: getqueries.deck }, function (cards) {
+    else if (getqueries.deckid) {
+        var poolSaved = 1;
+        $.getJSON("http://xn--smst-loa.se/magiccarddb/decksaver.php?", { poolid: getqueries.poolid, deckid: getqueries.deckid }, function (cards) {
             $.each(cards, createCard);
             graphicsFix();
         });
@@ -278,14 +280,7 @@ $(document).ready(function () {
 
     });
 
-    $(".RestoreButtonImages").hover(function () {
-        $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
-
-    }, function () {
-        $(this).attr("src", "Images/" + $(this).attr("id") + ".png");
-    });
-
-    $("#NewButton").hover(function () {
+    $(".buttonImages").hover(function () {
         $(this).attr("src", "Images/Hover" + $(this).attr("id") + ".png");
 
     }, function () {
@@ -345,33 +340,50 @@ $(document).ready(function () {
     });
 
     $('#saveButton').click(function () {
+        $('#linkDialog').dialog('open');
+        $('#namelinktextbox').val("Default David");
+    });
 
-        var poolElems = $("#poolDiv").find('ul').children('li');
+    $.savePoolFunction = function () {
+        $('#poolLinkP').attr('style', 'display:block');
+        $('#deckLinkP').attr('style', 'display:block');
+        if (poolSaved == 1) {
 
-        var poolArray = [];
+        }
 
-        $(poolElems).each(function () {
-            //console.log("pool: " + $(this).attr("cardid") + "\n");
-            poolArray.push($(this).attr("cardid"));
-        });
+        else {
+            var poolElems = $("#poolDiv").find('ul').children('li');
 
-        var deckElems = $("#deckDiv").find('ul').children('li');
+            var poolArray = [];
 
-        var deckArray = [];
-
-        $(deckElems).each(function () {
-            //console.log("deck: " + $(this).attr("cardid") + "\n");
-            deckArray.push($(this).attr("cardid"));
-        });
-
-        console.log("HAHA");
-        $.getJSON("http://sämst.se/magiccarddb/decksaver.php", { pool: poolArray, deck: deckArray }).done(
-            function (result) {
-                console.log("pool" + result.poolId + ", deck: " + result.deckId);
+            $(poolElems).each(function () {
+                //console.log("pool: " + $(this).attr("cardid") + "\n");
+                poolArray.push($(this).attr("cardid"));
             });
 
+            var deckElems = $("#deckDiv").find('ul').children('li');
 
-    });
+            var deckArray = [];
+
+            $(deckElems).each(function () {
+                //console.log("deck: " + $(this).attr("cardid") + "\n");
+                deckArray.push($(this).attr("cardid"));
+            });
+
+            $.getJSON("http://sämst.se/magiccarddb/decksaver.php", { pool: poolArray, deck: deckArray }).done(
+                function (result) {
+                    console.log("pool" + result.poolId + ", deck: " + result.deckId);
+                    $('#linkDialog').dialog('open');
+                    $('#poollinktextbox').val('http://xn--smst-loa.se/MagicSealedSimulator/SealedMagic/SealedMagic/magicSealedSite.html?poolid=' + result.poolId);
+                    if (result.deckId !== 'undefined') {
+                        result.deckId = 0;
+                    }
+                    $('#decklinktextbox').val('http://xn--smst-loa.se/MagicSealedSimulator/SealedMagic/SealedMagic/magicSealedSite.html?poolid=' + result.poolId + "&deckid=" + result.deckId);
+                });
+
+
+        }
+    };
 
     $.addLandFunction = function () {
         $("#addLandDialog").dialog("close");
@@ -525,7 +537,7 @@ $(document).ready(function () {
         draggable: false,
         resizable: false,
         width: 300,
-        height: 300,
+        height: 350,
         open: function (event, ui) {
             // reset values to 0
             $('#addPlainsBox').val("0");
@@ -540,6 +552,24 @@ $(document).ready(function () {
 
         buttons: { "OK": function () { $.addLandFunction(); }, "Suggest": function () { $.suggestLandFunction(); }, "Close": function () { $("#addLandDialog").dialog("close"); } }
     });
+
+    $("#linkDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        draggable: false,
+        resizable: false,
+        width: 500,
+        height: 300,
+        open: function (event, ui) {
+
+            $(this).parent().children(".ui-dialog-buttonpane").css("background-color", "white");
+            $(this).parent().children(".ui-dialog-buttonpane").css("border", "3px solid grey");
+            $(this).parent().children().children().children(".ui-button").css("font-family", "Vani");
+        },
+
+        buttons: { "Save": function () { $.savePoolFunction(); }, "Close": function () { $("#linkDialog").dialog("close"); } }
+    });
+
     $(".ui-dialog-titlebar").hide();
 });
 
